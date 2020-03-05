@@ -1,0 +1,39 @@
+{
+  "name": "cpsc304",
+  "version": "1.0.0",
+  "description": "Group Project for CPSC 304",
+  "main": "index.js",
+  "scripts": {
+    "build:pre:clean": "node_modules/.bin/rimraf dist",
+    "build:pre:mkdir": "mkdir dist",
+    "build:pre": "npm-run-all build:pre:clean build:pre:mkdir",
+    "build:compile": "tsc",
+    "build": "npm-run-all build:pre build:compile",
+    "start": "node dist/index.js",
+    "db:migrate": "node-pg-migrate",
+    "db:migrate:up": "node-pg-migrate up -d ./.env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmccann21/CPSC304.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmccann21/CPSC304/issues"
+  },
+  "homepage": "https://github.com/tmccann21/CPSC304#readme",
+  "devDependencies": {
+    "@types/chrome": "0.0.93",
+    "@types/node": "^13.7.0",
+    "dotenv": "^8.2.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "node-pg-migrate": "^4.2.2",
+    "pg": "^7.18.2"
+  }
+}
