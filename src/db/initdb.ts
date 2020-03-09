@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 import * as fs from "fs-extra";
 import { Client } from "pg";
 import log from '../util/log';
+import path from "path";
 
 const init = async () => {
   // read environment variables
@@ -12,7 +13,7 @@ const init = async () => {
     // connect to the local database server
     await client.connect();
     // read the contents of the initdb.pgsql file
-    const sql = await fs.readFile(__dirname + "/initdb.pgsql", { encoding: "UTF-8" });
+    const sql = await fs.readFile(path.join(__dirname, 'initdb.pgsql'), { encoding: "UTF-8" });
     // split the file into separate statements
     const statements = sql.split( /;\s*$/m );
     for ( const statement of statements ) {
