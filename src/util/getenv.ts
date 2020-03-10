@@ -1,6 +1,4 @@
-type ENV_VAR = string | number;
-
-const getenv = (name: string, required: boolean, defaultValue?: ENV_VAR): ENV_VAR => {
+const getenv = (name: string, required: boolean, defaultValue?: string): string => {
   const value = process.env[name];
 
   if (value === undefined && required)
