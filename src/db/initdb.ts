@@ -31,8 +31,9 @@ const init = async () => {
   }
 };
 
+log.info('Initializing database');
 init().then(() => {
-  log.info('PGSQL Database has been Initialized');
+  log.info('Database has been initialized');
 }).catch(() => {
   log.error('Database initialization failed!');
 });
