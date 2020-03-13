@@ -4,7 +4,7 @@ import { Client } from "pg";
 import log from '../util/log';
 import path from "path";
 
-const seeds = ['seed_users.pgsql', 'seed_player.pgsql'];
+const seeds = ['seed_users.pgsql'];
 
 const init = async () => {
   dotenv.config();
