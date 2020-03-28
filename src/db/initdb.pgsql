@@ -1,13 +1,19 @@
 -- Drops all tables
+DROP TABLE IF EXISTS gamePlayed; 
 DROP TABLE IF EXISTS teamRoster; 
 DROP TABLE IF EXISTS teams; 
+DROP TABLE IF EXISTS coachRecord; 
 DROP TABLE IF EXISTS coach;
+DROP TABLE IF EXISTS playsPosition;
+DROP TABLE IF EXISTS playerStats; 
 DROP TABLE IF EXISTS player;        -- need to drop tables in reverse order since if one table stills depend on another, dropping the latter would error
 DROP TABLE IF EXISTS leagueOrganizedBy; 
 DROP TABLE IF EXISTS leagueManager; 
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS seasons; 
 DROP TABLE IF EXISTS leagues; 
+DROP TABLE IF EXISTS games; 
+DROP TABLE IF EXISTS positions; 
 
 -- Creates users table (Changed User to Users because User is reserved in PGSQL :/)
 CREATE TABLE IF NOT EXISTS users (
@@ -74,4 +80,54 @@ CREATE TABLE IF NOT EXISTS teamRoster (
     PRIMARY KEY (playerId, teamName), 
     FOREIGN KEY (playerId) REFERENCES player(playerId) ON UPDATE CASCADE ON DELETE CASCADE, 
     FOREIGN KEY (teamName) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE
+)
+
+CREATE TABLE IF NOT EXISTS games ( 
+    time DATETIME,  
+    location varchar(64),
+    PRIMARY KEY (time, location)
+)
+
+CREATE TABLE IF NOT EXISTS positions (
+    positionName varChar(64) PRIMARY KEY
+)
+
+CREATE TABLE IF NOT EXISTS playsPosition (
+    playerId INT,
+    positionName varChar(64) DEFAULT '', 
+    PRIMARY KEY (playerId, positionName),
+    FOREIGN KEY (playerId) REFERENCES player(playerId) ON UPDATE CASCADE ON DELETE CASCADE, 
+    FOREIGN KEY (positionName) REFERENCES positions(positionName) ON UPDATE CASCADE ON DELETE SET DEFAULT
+)
+
+CREATE TABLE IF NOT EXISTS coachRecord (
+    coachId INT, 
+    year INT, 
+    winPercentage FLOAT, 
+    PRIMARY KEY (coachId, year),
+    FOREIGN KEY (coachId) REFERENCES coach(coachId) ON UPDATE CASCADE ON DELETE CASCADE, 
+)
+
+CREATE TABLE IF NOT EXISTS playerStats (
+    playerId INT, 
+    year INT, 
+    goals INT DEFAULT 0 NOT NULL, 
+    assists INT DEFAULT 0 NOT NULL, 
+    saves INT DEFAULT 0 NOT NULL, 
+    plusminus INT DEFAULT 0 NOT NULL, 
+    PRIMARY KEY (playerId, year), 
+    FOREIGN KEY (playerId) REFERENCES player(playerId) ON UPDATE CASCADE ON DELETE CASCADE
+)
+
+CREATE TABLE IF NOT EXISTS gamePlayed (
+    time DATETIME, 
+    location varchar(64),
+    team1Name varchar(64),
+    team2Name varchar(64) CHECK (team2Name <> team1Name),
+    team1Score INT, 
+    team2Score INT, 
+    PRIMARY KEY (time, location), 
+    FOREIGN KEY (time, location) REFERENCES games(time, location) ON UPDATE CASCADE ON DELETE CASCADE, 
+    FOREIGN KEY (team1Name) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE, 
+    FOREIGN KEY (team2Name) REFERENCE teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE, 
 )

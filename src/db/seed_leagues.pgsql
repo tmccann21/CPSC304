@@ -12,3 +12,4 @@ INSERT INTO leagueOrganizedBy (managerId, leagueName) VALUES ((SELECT managerId 
 INSERT INTO seasons (seasonYear, leagueName) VALUES (2019, 'Major League Soccer');
 INSERT INTO seasons (seasonYear, leagueName) VALUES (2019, 'LaLiga');
 INSERT INTO seasons (seasonYear, leagueName) VALUES (2018, 'Major League Soccer');
+
