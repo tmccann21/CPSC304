@@ -1,8 +1,6 @@
 import { RouteRegistrar } from "../api";
 import userController from './userController';
 import express, { response } from 'express';
-import pg from 'pg'
-import pgPromise from "pg-promise";
 import log from '../util/log';
 
 const userRoutes: RouteRegistrar = (app: express.Application, db) => {
@@ -11,6 +9,17 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
   app.get('/user/:id', async (req: any, res) => {
     try {
       const response = await controller.getUser(req.params.id);
+      res.json(response);
+    } catch(err) {
+      log.error(err.message || err);
+      response.statusCode = 404;
+      res.json({error: err.message || err});
+    }
+  });
+
+  app.get('/user', async (req: any, res) => {
+    try {
+      const response = await controller.getUsers();
       res.json(response);
     } catch(err) {
       log.error(err.message || err);

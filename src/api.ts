@@ -17,12 +17,18 @@ const api = (app: express.Application) => {
   
   const db = pgPromise()(dbConfig);
   const port = getenv('PORT', true);
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
 
+  app.use(express.static('public'));
   app.use(express.json());
-
   app.use(function (req, res, next) {
     log.info(`${req.method} ${req.path}`);
     next()
+  });
+
+  app.get('/', function(req, res) {
+    res.render('index.ejs');
   });
 
   userRoutes(app, db);
