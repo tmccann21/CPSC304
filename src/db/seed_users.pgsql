@@ -61,10 +61,10 @@ INSERT INTO playerStats (playerId, year, goals, assists, saves, plusminus) VALUE
 
 -- Insert Coaches Records 
 
-INSERT INTO coachRecord () VALUES (3, 2018, 0.565);
-INSERT INTO coachRecord () VALUES (3, 2017, 0.601);
-INSERT INTO coachRecord () VALUES (3, 2016, 0.400);
-INSERT INTO coachRecord () VALUES (4, 2017, 0.309);
+INSERT INTO coachRecord VALUES (3, 2018, 0.565);
+INSERT INTO coachRecord VALUES (3, 2017, 0.601);
+INSERT INTO coachRecord VALUES (3, 2016, 0.400);
+INSERT INTO coachRecord VALUES (4, 2017, 0.309);
 
  
 
