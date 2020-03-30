@@ -80,17 +80,17 @@ CREATE TABLE IF NOT EXISTS teamRoster (
     PRIMARY KEY (playerId, teamName), 
     FOREIGN KEY (playerId) REFERENCES player(playerId) ON UPDATE CASCADE ON DELETE CASCADE, 
     FOREIGN KEY (teamName) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE
-)
+);
 
 CREATE TABLE IF NOT EXISTS games ( 
-    time DATETIME,  
+    time timestamp,  
     location varchar(64),
     PRIMARY KEY (time, location)
-)
+);
 
 CREATE TABLE IF NOT EXISTS positions (
     positionName varChar(64) PRIMARY KEY
-)
+);
 
 CREATE TABLE IF NOT EXISTS playsPosition (
     playerId INT,
@@ -98,15 +98,15 @@ CREATE TABLE IF NOT EXISTS playsPosition (
     PRIMARY KEY (playerId, positionName),
     FOREIGN KEY (playerId) REFERENCES player(playerId) ON UPDATE CASCADE ON DELETE CASCADE, 
     FOREIGN KEY (positionName) REFERENCES positions(positionName) ON UPDATE CASCADE ON DELETE SET DEFAULT
-)
+);
 
 CREATE TABLE IF NOT EXISTS coachRecord (
     coachId INT, 
     year INT, 
     winPercentage FLOAT, 
     PRIMARY KEY (coachId, year),
-    FOREIGN KEY (coachId) REFERENCES coach(coachId) ON UPDATE CASCADE ON DELETE CASCADE, 
-)
+    FOREIGN KEY (coachId) REFERENCES coach(coachId) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 CREATE TABLE IF NOT EXISTS playerStats (
     playerId INT, 
@@ -117,10 +117,10 @@ CREATE TABLE IF NOT EXISTS playerStats (
     plusminus INT DEFAULT 0 NOT NULL, 
     PRIMARY KEY (playerId, year), 
     FOREIGN KEY (playerId) REFERENCES player(playerId) ON UPDATE CASCADE ON DELETE CASCADE
-)
+);
 
 CREATE TABLE IF NOT EXISTS gamePlayed (
-    time DATETIME, 
+    time timestamp, 
     location varchar(64),
     team1Name varchar(64),
     team2Name varchar(64) CHECK (team2Name <> team1Name),
@@ -129,5 +129,5 @@ CREATE TABLE IF NOT EXISTS gamePlayed (
     PRIMARY KEY (time, location), 
     FOREIGN KEY (time, location) REFERENCES games(time, location) ON UPDATE CASCADE ON DELETE CASCADE, 
     FOREIGN KEY (team1Name) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE, 
-    FOREIGN KEY (team2Name) REFERENCE teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE, 
-)
+    FOREIGN KEY (team2Name) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE
+);
