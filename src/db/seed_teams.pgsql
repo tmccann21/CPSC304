@@ -10,12 +10,12 @@ INSERT INTO teamRoster (playerId, teamName, year) VALUES (2, 'FC Barcelona', 201
 
 -- Inserts games 
 
-INSERT INTO games (time, location) VALUES ( '2020-01-01T14:00:00', 'Vancouver');
-INSERT INTO games (time, location) VALUES ( '2020-01-02T14:00:00', 'Atlanta');
-INSERT INTO games (time, location) VALUES ( '2019-05-23T14:30:00', 'Dallas');
+INSERT INTO games (time, location) VALUES ( '2019-10-19 10:23:54', 'Vancouver');
+INSERT INTO games (time, location) VALUES ( '2019-10-19 10:23:54', 'Atlanta');
+INSERT INTO games (time, location) VALUES ( '2018-01-21 19:30:00', 'Dallas');
 
 -- Inserts games played 
 
-INSERT INTO gamePlayed (time, location, team1Name, team2Name, team1Score, team2Score) VALUES ('2020-01-01T14:00:00', 'Vancouver', 'Vancouver Whitecaps', 'FC Barcelona', 2, 4); 
-INSERT INTO gamePlayed (time, location, team1Name, team2Name, team1Score, team2Score) VALUES ('2020-01-02T14:00:00', 'Atlanta', 'FC Barcelona', 'Real Madrid', 2, 1); 
-INSERT INTO gamePlayed (time, location, team1Name, team2Name, team1Score, team2Score) VALUES ('2019-05-23T14:30:00', 'Dallas', 'FC Barcelona', 'Vancouver Whitecaps', 1, 5); 
+INSERT INTO gamePlayed (time, location, team1Name, team2Name, team1Score, team2Score) VALUES ('2019-10-19 10:23:54', 'Vancouver', 'Vancouver Whitecaps', 'FC Barcelona', 2, 4); 
+INSERT INTO gamePlayed (time, location, team1Name, team2Name, team1Score, team2Score) VALUES ('2019-10-19 10:23:54', 'Atlanta', 'FC Barcelona', 'Real Madrid', 2, 1); 
+INSERT INTO gamePlayed (time, location, team1Name, team2Name, team1Score, team2Score) VALUES ('2018-01-21 19:30:00', 'Dallas', 'FC Barcelona', 'Vancouver Whitecaps', 1, 5); 

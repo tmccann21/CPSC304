@@ -1,4 +1,6 @@
 -- Drops all tables
+DROP TABLE IF EXISTS seasonGame;
+DROP TABLE IF EXISTS seasonParticipation;
 DROP TABLE IF EXISTS gamePlayed; 
 DROP TABLE IF EXISTS teamRoster; 
 DROP TABLE IF EXISTS teams; 
@@ -61,7 +63,7 @@ CREATE TABLE IF NOT EXISTS leagueOrganizedBy (
 CREATE TABLE IF NOT EXISTS seasons (
     seasonYear INT, 
     leagueName varchar(64),
-    PRIMARY KEY (leagueName, seasonYear), 
+    PRIMARY KEY (seasonYear, leagueName), 
     FOREIGN KEY (leagueName) REFERENCES leagues (leagueName) ON UPDATE CASCADE ON DELETE CASCADE
 ); 
 
@@ -130,4 +132,25 @@ CREATE TABLE IF NOT EXISTS gamePlayed (
     FOREIGN KEY (time, location) REFERENCES games(time, location) ON UPDATE CASCADE ON DELETE CASCADE, 
     FOREIGN KEY (team1Name) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE, 
     FOREIGN KEY (team2Name) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS seasonParticipation (
+    teamName varchar(64),
+    seasonYear INT,
+    record varchar(10),
+    leagueName varchar(64),
+    PRIMARY KEY (teamName, seasonYear, leagueName),
+    FOREIGN KEY (teamName) REFERENCES teams(teamName) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (seasonYear, leagueName) REFERENCES seasons(seasonYear, leagueName) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
+CREATE TABLE IF NOT EXISTS seasonGame (
+    seasonYear INT,
+    time timestamp,
+    location varchar(30),
+    leagueName varchar(50),
+    PRIMARY KEY (seasonYear, time, location),
+    FOREIGN KEY (seasonYear, leagueName) REFERENCES seasons(seasonYear, leagueName) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (time, location) REFERENCES games(time, location) ON UPDATE CASCADE ON DELETE CASCADE
 );

@@ -46,7 +46,7 @@ INSERT INTO positions (positionName) VALUES ('Striker');
 
 INSERT INTO playsPosition (playerId, positionName) VALUES (1, 'Goalkeeper'); 
 INSERT INTO playsPosition (playerId, positionName) VALUES (2, 'Right Fullback'); 
-INSERT INTO playsPosition (playerId, positionName) VALUES (2, 'Center Back');
+-- INSERT INTO playsPosition (playerId, positionName) VALUES (2, 'Center Back');  violates primary key
 INSERT INTO playsPosition (playerId, positionName) VALUES (6, 'Center Back');
 INSERT INTO playsPosition (playerId, positionName) VALUES (7, 'Striker');
 
