@@ -38,4 +38,23 @@ $(document).ready(function(){
       },
     });
   });
+
+  $('#create-user-btn').click(() => {
+    const newUserPayload = {
+      "name": $('#user-name').val(),
+      "email": $('#user-email').val(),
+      "phone": $('#user-phone').val(),
+      "password": $('#user-pwd').val(),
+    };
+    
+    $.ajax({
+      type: 'POST',
+      url: 'user',
+      data: JSON.stringify(newUserPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.text(rowsToTextBox(response));
+      },
+    });
+  });
 });

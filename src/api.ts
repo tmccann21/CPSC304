@@ -4,6 +4,7 @@ import log from './util/log';
 import express from 'express';
 
 import userRoutes from './users/userRoutes';
+import playerRoutes from './users/playerRoutes'; 
 
 export type RouteRegistrar = (app, db) => void;
 
@@ -31,7 +32,12 @@ const api = (app: express.Application) => {
     res.render('index.ejs');
   });
 
+  app.get('/manage', function(req, res) {
+    res.render('manage.ejs');
+  });
+
   userRoutes(app, db);
+  playerRoutes(app, db)
   
   app.use(function (req, res, next) {
     log.info(`${req.method} ${req.path} [${res.statusCode}]`);
