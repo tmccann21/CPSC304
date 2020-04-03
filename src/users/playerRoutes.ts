@@ -12,7 +12,7 @@ const playerRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
-      response.statusCode = 404;
+      res.statusCode = 404;
       res.json({error: err.message || err});
     }
   });
@@ -23,7 +23,7 @@ const playerRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
-      response.statusCode = 404;
+      res.statusCode = 404;
       res.json({error: err.message || err});
     }
   });
@@ -44,7 +44,7 @@ const playerRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
-      response.statusCode = 404;
+      res.statusCode = 500;
       res.json({error: err.message || err});
     }
   })
