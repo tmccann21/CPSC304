@@ -44,7 +44,7 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
-      res.statusCode = 404;
+      res.statusCode = 500;
       res.json({error: err.message || err});
     }
   })
