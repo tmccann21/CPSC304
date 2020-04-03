@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./manageUsers.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="container-fluid bg-3 text-center">    
+  <h3>Player Database</h3>
+  <p id="query-result">
+    no query results to show
+  </p>
+  <div class="custom-control custom-radio custom-control-inline"">
+    <input type="radio" id="player-check" name="customRadio" class="custom-control-input">
+    <label class="custom-control-label" for="customRadio1">Players</label>
+  </div>  
+  <div class="custom-control custom-radio custom-control-inline"">
+    <input type="radio" id="coach-check" name="customRadio" class="custom-control-input">
+    <label class="custom-control-label" for="customRadio2">Coaches</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline"">
+    <input type="radio" id="manager-check" name="customRadio" class="custom-control-input">
+    <label class="custom-control-label" for="customRadio2">Managers</label>
+  </div>
+  <button type="button" id="get-users-btn">List Users</button>
+  
+  <div class ="form-group">
+    <label for="player-id">Player ID: </label>
+    <input type="number" class="form-control" id="player-id" placeholder="Enter User ID">
+  </div>
+  <div class ="form-group">
+    <label for="player-age">Age: </label>
+    <input type="number" class="form-control" id="player-age" placeholder="Enter Age">
+  </div>
+  <div class ="form-group">
+    <label for="player-height">Height: </label>
+    <input type="number" class="form-control" id="player-height" placeholder="Enter Height (cm)">
+  </div>
+  <div class ="form-group">
+    <label for="player-numb">Jersey Number: </label>
+    <input type="number" class="form-control" id="player-numb" placeholder="Enter Jersey Number">
+  </div>
+  <button type="button" id="add-player-btn">Add Player</button>
+
+  <div class ="form-group">
+    <label for="coach-id">Coach ID: </label>
+    <input type="number" class="form-control" id="coach-id" placeholder="Enter User ID">
+  </div>
+  <div class ="form-group">
+    <label for="coach-age">Age: </label>
+    <input type="number" class="form-control" id="coach-age" placeholder="Enter Age">
+  </div>
+  <div class ="form-group">
+    <label for="coach-gender">Gender: </label>
+    <input type="text" class="form-control" id="coach-gender" placeholder="Enter Gender">
+  </div>
+  <button type="button" id="add-coach-btn">Add Coach</button>
+
+  <div class ="form-group">
+    <label for="manager-id">Manager ID: </label>
+    <input type="number" class="form-control" id="manager-id" placeholder="Enter User ID">
+  </div>
+  <button type="button" id="add-manager-btn">Add Manager</button>
+
+</div>
+</body>
+</html>
