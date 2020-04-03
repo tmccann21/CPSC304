@@ -1,6 +1,6 @@
 const rowsToTextBox = (rows) => {
   return rows.reduce((acc, cur) => {
-    return `${acc}(${cur.playerid}, ${cur.age}, ${cur.height}, ${cur.jerseynumber})\n\r`;
+    return `${acc}${cur.row}\n\r`;
   },'');
 }
 
@@ -32,6 +32,10 @@ $(document).ready(function(){
       success: (response) => {
         queryResult.text(rowsToTextBox(response));
       },
+      error: (err) => {
+        var errMessage = err.status + ': ' + err.statusText;
+        alert('Error - ' + errMessage); 
+      }
     });
   });
 });

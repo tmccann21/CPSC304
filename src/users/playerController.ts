@@ -17,14 +17,16 @@ export interface IPlayerController {
 }
 
 const getPlayerQuery = `
-SELECT (playerId, age, height, jerseyNumber)
-FROM player
-WHERE playerId = $[playerId];
+SELECT (P.playerId, U.name, P.age, P.height, P.jerseyNumber)
+FROM player P, users U
+WHERE P.playerId = $[playerId] 
+AND P.playerId = U.userId;
 `
 
 const getPlayersQuery = `
-SELECT * 
-FROM player;
+SELECT (P.playerId, U.name, P.age, P.height, P.jerseyNumber)
+FROM player P, users U
+WHERE P.playerId = U.userId;
 `
 
 const addPlayerQuery = `
