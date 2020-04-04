@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./gamesPlayed.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="container-fluid bg-3 text-center">    
+  <h3>Games Played Database</h3>
+  <p id="query-result">
+	no query results to show
+  </p>
+  <div class="form-group">
+	  <label for="game-time">Time: </label>
+	  <input type="datetime-local" class="form-control" id="game-time" placeholder= "Enter a time">
+  </div>
+  <div class="form-group">
+	  <label for="game-loc"> Location: </label>
+	  <input type="string" class="form-group" id="game-loc" placeholder= "Enter a location">
+  </div>
+  <div class="form-group">
+	<label for="team1-name"> Team 1: </label>
+	<input type="string" class="form-group" id="team1-name" placeholder= "Enter a team">
+  </div>
+  <div class="form-group">		
+	<label for="team2-name"> Team 2: </label>
+	<input type="string" class="form-group" id="team2-name" placeholder= "Enter a team">
+  </div>
+  <button type="button" id="add-gamesPlayed-btn">Add Game</button>
+
+  <button type="button" id="get-gamesPlayed-btn">List Games Played</button>
+</div>
+</body>
+</html>

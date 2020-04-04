@@ -7,6 +7,7 @@ import userRoutes from './users/userRoutes';
 import playerRoutes from './users/subUserRoutes'; 
 import {coachRoutes} from './users/subUserRoutes';
 import {managerRoutes} from './users/subUserRoutes'; 
+import gamesPlayedRoutes from './games/gamesPlayedRoutes';
 
 export type RouteRegistrar = (app, db) => void;
 
@@ -38,10 +39,15 @@ const api = (app: express.Application) => {
     res.render('manageUsers.ejs');
   });
 
+  app.get('/gamesplayed', function (req, res) {
+    res.render('gamesplayed.ejs');
+  })
+
   userRoutes(app, db);
   playerRoutes(app, db);
   coachRoutes(app, db); 
   managerRoutes(app, db); 
+  gamesPlayedRoutes(app, db);
   
   app.use(function (req, res, next) {
     log.info(`${req.method} ${req.path} [${res.statusCode}]`);
