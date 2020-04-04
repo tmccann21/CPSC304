@@ -6,7 +6,7 @@ import log from '../util/log';
 const gamesPlayedRoutes: RouteRegistrar = (app: express.Application, db) => {
   const controller = gamesPlayedController(db);
   
-  app.get('/gamesplayed/:id', async (req: any, res) => {
+  app.get('/gp/:id', async (req: any, res) => {
     try {
       const response = await controller.getGamePlayed(req.params.time, req.params.location, req.params.team1Name, req.params.team2Name);
       res.json(response);
@@ -17,7 +17,7 @@ const gamesPlayedRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.get('/gamesplayed', async (req: any, res) => {
+  app.get('/gp', async (req: any, res) => {
     try {
       const response = await controller.getAllGamesPlayed();
       res.json(response);
@@ -28,7 +28,7 @@ const gamesPlayedRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.post('/gamesplayed', async (req: any, res) => {
+  app.post('/gp', async (req: any, res) => {
     try {
 	  if (!req.body || !req.body.time || ! req.body.location || !req.body.team1Name || !req.body.team2Name || req.body.team1Score || req.body.team2Score) {
         throw new Error('Invalid create game request');

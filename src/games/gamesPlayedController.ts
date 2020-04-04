@@ -30,7 +30,7 @@ WHERE team2Name = $[team1Name] OR team2Name = $[team2Name];
 `
 
 const getAllGamesPlayedQuery = `
-SELECT *
+SELECT (time, location, team1Name, team2Name, team1Score, team2Score)
 FROM gameplayed;
 `
 

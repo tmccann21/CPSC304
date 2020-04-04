@@ -15,8 +15,8 @@ INSERT INTO seasons (seasonYear, leagueName) VALUES (2018, 'Major League Soccer'
 
 -- Inserts season participation
 
--- INSERT INTO seasonParticipation (teamName, seasonYear, record, leagueName) VALUES ('Vancouver Whitecaps', 2019, '30-0-0', 'Major League Soccer');
--- INSERT INTO seasonParticipation (teamName, seasonYear, record, leagueName) VALUES ('Real Madrid', 2019, '0-0-0', 'LaLiga');
+INSERT INTO seasonParticipation (teamName, seasonYear, record, leagueName) VALUES ('Vancouver Whitecaps', 2019, '30-0-0', 'Major League Soccer');
+INSERT INTO seasonParticipation (teamName, seasonYear, record, leagueName) VALUES ('Real Madrid', 2019, '0-0-0', 'LaLiga');
 INSERT INTO seasonParticipation (teamName, seasonYear, record, leagueName) VALUES ((SELECT teamName FROM teams WHERE teamName = 'FC Barcelona'), 2019, '0-1-0', (SELECT leagueName FROM seasons WHERE leagueName = 'LaLiga'));
 
 -- Inserts season games

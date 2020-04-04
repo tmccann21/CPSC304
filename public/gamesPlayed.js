@@ -10,7 +10,7 @@ $(document).ready(function() {
   $('#get-gamesPlayed-btn').click(() => {
     $.ajax({
       type: 'GET',
-      url: 'gamesplayed',
+      url: 'gp',
       success: (response) => {
         queryResult.text(rowsToTextBox(response));
       },
@@ -31,7 +31,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'gamesplayed',
+      url: 'gp',
       data: JSON.stringify(gamesPlayedRequestPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
