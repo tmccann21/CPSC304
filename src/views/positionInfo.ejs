@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./positionInfo.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="container-fluid bg-3 text-center">    
+  <h3>Player Search: </h3>
+  <p id="query-result">
+	no query results to show
+  </p>
+  <button type="button" id="get-positions-btn">Get Positions</button>
+  <div class="form-group">
+	  <label for="position-pid">Player Id: </label>
+	  <input type="number" class="form-control" id="position-pid" placeholder= "Enter Player ID">
+  </div>
+  <div class="form-group">
+    <label for="position-name">Position Name: </label>
+    <input type="text" class="form-control" id="position-name" placeholder= "Position Name (ie. Goal Keeper, Center Back etc)">
+  </div>
+  <button type="button" id="searchposition-pid-btn">Get Position by Player ID</button>
+  <button type="button" id="searchposition-name-btn">Get Position by Position Name</button>
+  <button type="button" id="add-position-btn">Add Player Position</button>
+</div>
+</body>
+</html>

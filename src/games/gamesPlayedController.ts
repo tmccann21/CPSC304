@@ -46,10 +46,10 @@ SELECT (time, location, team1Name, team2Name, team1Score, team2Score)
 FROM gameplayed;
 `
 
-const getAllGamesQuery = `
-SELECT *
-FROM games
-`
+// const getAllGamesQuery = `
+// SELECT *
+// FROM games
+// `
 
 const gamePlayedController: ((db: pgPromise.IDatabase<{}>) => IGamePlayedController) = (db) => ({
 	createGame: async(info: IGame) => {

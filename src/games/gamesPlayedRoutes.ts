@@ -7,16 +7,16 @@ import log from '../util/log';
 const gamesRoutes: RouteRegistrar = (app: express.Application, db) => {
   const controller = gameController(db);
 
-  app.get('/games', async (req: any, res) => {
-    try {
-      const response = await controller.getAllGames();
-      res.json(response);
-    } catch (err) {
-      log.error(err.message || err);
-      res.statusCode = 404;
-      res.json({ error: err.message || err });
-    }
-  })
+  // app.get('/games', async (req: any, res) => {
+  //   try {
+  //     const response = await controller.getAllGames();
+  //     res.json(response);
+  //   } catch (err) {
+  //     log.error(err.message || err);
+  //     res.statusCode = 404;
+  //     res.json({ error: err.message || err });
+  //   }
+  // })
   
   app.post('/games', async (req: any, res) => {
     try {

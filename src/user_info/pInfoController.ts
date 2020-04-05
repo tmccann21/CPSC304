@@ -31,7 +31,7 @@ export interface IPStatController {
 }
 
 export interface IPositionController {
-    getPosition: (positionName: string) => Promise<IPositionInfo>;
+    getPosition: (positionName: string) => Promise<IPositionInfo[]>;
     getPositions: () => Promise<IPositionInfo[]>; 
     getPlayerPosition: (playerId: string) => Promise<IPositionInfo[]>; 
     addPosition: (info: IPositionInfo) => Promise<IPositionInfo>;
@@ -123,7 +123,7 @@ RETURNING (playerId, year, goals, assists, saves, plusminus);
 
 const positionController: ((db: pgPromise.IDatabase<{}>) => IPositionController) = (db) => ({
     getPosition: async (positionName: string) => {
-      return db.one(getPositionQuery, { positionName });
+      return db.manyOrNone(getPositionQuery, { positionName });
     },
     getPositions: async () => {
       return db.manyOrNone(getPositionsQuery);
