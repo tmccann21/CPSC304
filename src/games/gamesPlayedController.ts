@@ -19,7 +19,7 @@ export interface ITeam extends IGame {
 export interface IGamePlayedController {
 	createGame: (info: IGame) => Promise<IGame>;
 	getAllGames: () => Promise<IGame[]>;
-	getGamePlayed: (time: string, location: string, team1Name: string, team2Name: string) => Promise<IGamePlayed[]>;
+	getGamesPlayed: (time: string, location: string, team1Name: string, team2Name: string) => Promise<IGamePlayed[]>;
 	createGamePlayed: (info: IGamePlayed) => Promise<IGamePlayed>;
 	getAllGamesPlayed: () => Promise<IGamePlayed[]>;
 	getAllTeamNames: () => Promise<ITeam[]>;
@@ -39,26 +39,20 @@ RETURNING (time, location, team1Name, team2Name, team1Score, team2Score);
 
 
 // better guarantee of fkey constraint
-
 // const createGamePlayedQuery = `
 // INSERT INTO gameplayed (time, location, team1Name, team2Name, team1Score, team2Score)
 // VALUES ((SELECT time FROM games WHERE time = $[time]), (SELECT location FROM games WHERE location=$[location]), $[team1Name], $[team2Name], $[team1Score], $[team2Score])
 // RETURNING (time, location, team1Name, team2Name, team1Score, team2Score);
 // `
-
-const getAllGames= `
-SELECT (time, location)
-FROM games
-`
  
 const getGamePlayedQuery = `
 SELECT (time, location, team1Name, team2Name)
 FROM gameplayed
-WHERE (team1Name = $[team1Name] AND team2Name = $[team2Name]) OR (team1Name = $[team2Name] AND team2Name = $[team1Name])
+WHERE (team1Name = $[qT1] AND team2Name = $[qT2]) OR (team1Name = $[qT2] AND team2Name = $[qT1])
 AND
-location = $[location]
+location = $[qLoc]
 AND
-time = $[time];
+time = $[qTime];
 `
 
 const getAllGamesPlayedQuery = `
@@ -89,13 +83,13 @@ const gamePlayedController: ((db: pgPromise.IDatabase<{}>) => IGamePlayedControl
 		return db.manyOrNone(getAllTeamNamesQuery);
 	},
 
-	getGamePlayed: async (time, location, team1Name, team2Name) => {
-		let qTime, qLoc, qT1, qT2;
-		qTime = (time="") ? '%' : time;
-		qLoc = (location="") ? '%' : location;
-		qT1 = (team1Name="") ? '%' : team1Name;
-		qT2 = (team2Name="") ? '%' : team2Name;
-		return db.manyOrNone(getGamePlayedQuery, { qTime, qLoc , qT1, qT2});
+	getGamesPlayed: async (time, location, team1Name, team2Name) => {
+		var qTime, qLoc, qT1, qT2;
+		qTime = time;
+		qLoc =  location;
+		qT1 = team1Name;
+		qT2 =team2Name;
+		return db.manyOrNone(getGamePlayedQuery, { qTime, qLoc , qT1, qT2 });
 	},
 	getAllGamesPlayed: async () => {
 		return db.manyOrNone(getAllGamesPlayedQuery);
@@ -104,7 +98,6 @@ const gamePlayedController: ((db: pgPromise.IDatabase<{}>) => IGamePlayedControl
 		return db.one(createGamePlayedQuery, { ...info });
 	},
 })
-
 
 // export {gameController};
 export default gamePlayedController;

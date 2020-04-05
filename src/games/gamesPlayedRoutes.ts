@@ -52,9 +52,9 @@ const gamesPlayedRoutes: RouteRegistrar = (app: express.Application, db) => {
   })
 
 
-  app.get('/gp/:id', async (req: any, res) => {
+  app.get('/gp/:time/:location/:team1Name/:team2Name', async (req: any, res) => {
     try {
-      const response = await controller.getGamePlayed(req.params.time, req.params.location, req.params.team1Name, req.params.team2Name);
+      const response = await controller.getGamesPlayed(req.params.time, req.params.location, req.params.team1Name, req.params.team2Name);
       res.json(response);
     } catch (err) {
       log.error(err.message || err);

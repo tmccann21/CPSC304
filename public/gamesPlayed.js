@@ -15,7 +15,7 @@ $(document).ready(function() {
   const teamBox = $('#team-box');
   const gameBox = $('#game-box');
 
-  // query data for team and game
+  // query data for team and game on startup
   $.ajax({
     type: 'GET',
     url: 'g',
@@ -39,6 +39,9 @@ $(document).ready(function() {
       alert('Error - ' + errMessage);
     }
   });
+
+
+  // button functions
 
   $('#list-games-btn').click(() => {
     $.ajax({
@@ -68,19 +71,20 @@ $(document).ready(function() {
     });
   });
 
-  $('#get-gamesPlayed-btn').click(() => {
-    const getGamesPlayedRequestPayload = {
-      "time" : $('#game-time').val(),
-      "location" : $('#game-loc').val(),
-      "team1Name" : $('#team1-name').val(),
-      "team2Name" : $('#team2-name').val(),
-    };
+  $('#find-gamesPlayed-btn').click(() => {
+    var gTime = $('#game-time').val();
+    var gLoc = $('#game-loc').val();
+    var gT1N =  $('#team1-name').val();
+    var gT2N = $('#team2-name').val();
 
+    gTime = (gTime == "") ? '%' : gTime;
+    gLoc = (gLoc == "") ? '%' : gLoc;
+    gT1N = (gT1N == "") ? '%' : gT1N;
+    gT1N = (gT2N == "") ? '%' : gT2N;
+    
     $.ajax({
       type: 'GET',
-      url: 'gp/:id',
-      data: JSON.stringify(getGamesPlayedRequestPayload),
-      contentType: 'application/json; charset=utf-8',
+      url: 'gp/' + gTime + '/' + gLoc + '/' + gT1N + '/' + gT2N,
       success: (response) => {
         queryResult.text(rowsToTextBox(response));
       },
@@ -100,31 +104,21 @@ $(document).ready(function() {
       "team1Score" : $('#team1-score').val(),
       "team2Score" : $('#team2-score').val(),
     };
+
+    // creates an entry in games first so there is no fkey violation
     $.ajax({
       type: 'POST',
       url: 'games',
       data: JSON.stringify(gamesPlayedRequestPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        console.log("added game");
+        queryResult.text("Successfully added : \n" + response.row)
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
         alert('Error - ' + errMessage); 
       }
     })
-
-    // $.ajax({
-    //   type: 'GET',
-    //   url: 'games',
-    //   success: (response) => {
-    //     queryResult.text(rowsToTextBox(response));
-    //   },
-    //   error: (err) => {
-    //     var errMessage = err.status + ' : ' + err.statusText;
-    //     alert('Error - ' + errMessage);
-    //   }
-    // })
 
     $.ajax({
       type: 'POST',
