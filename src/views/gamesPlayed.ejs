@@ -7,10 +7,17 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<div class="container-fluid bg-3 text-center">    
+<div class="container-fluid bg-3 text-center">
   <h3>Games Played Database</h3>
-  <p id="query-result">
-	no query results to show
+  <p class="info-box" id="query-result">
+    Games Played:
+    no query results to show
+  </p>
+  <p class="info-box" id="team-box">
+    Registered Teams
+  </p>
+  <p class="info-box" id="game-box">
+    Registered Games
   </p>
   <div class="form-group">
 	  <label for="game-time">Time: </label>
@@ -38,6 +45,7 @@
   </div>
 
   <button type="button" id="add-gamesPlayed-btn">Add Game</button>
+  <button type="button" id="list-games-btn">List Games</button>
   <button type="button" id="get-gamesPlayed-btn">Find Game(s)</button>
   <button type="button" id="list-gamesPlayed-btn">List All Games Played</button>
 </div>

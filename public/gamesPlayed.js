@@ -4,8 +4,55 @@ const rowsToTextBox = (rows) => {
   },'');
 }
 
+const teamToText = (teams) => {
+  return teams.reduce((acc, cur) => {
+    return `${acc}${cur.teamname}\n\r`;
+  },'');
+}
+
 $(document).ready(function() {
   const queryResult = $('#query-result');
+  const teamBox = $('#team-box');
+  const gameBox = $('#game-box');
+
+  // query data for team and game
+  $.ajax({
+    type: 'GET',
+    url: 'g',
+    success: (response) => {
+      gameBox.text("Registered Games: \n" + rowsToTextBox(response));
+    },
+    error: (err) => {
+      var errMessage = err.status + ' : ' + err.statusText;
+      alert('Error - ' + errMessage);
+    }
+  });
+
+  $.ajax({
+    type: 'GET',
+    url: 't',
+    success: (response) => {
+      teamBox.text("Registered Teams: \n" + teamToText(response));
+    },
+    error: (err) => {
+      var errMessage = err.status + ' : ' + err.statusText;
+      alert('Error - ' + errMessage);
+    }
+  });
+
+  $('#list-games-btn').click(() => {
+    $.ajax({
+      type: 'GET',
+      url: 'g',
+      success: (response) => {
+        queryResult.text("Games Played: \n" + rowsToTextBox(response));
+      },
+      error: (err) => {
+        var errMessage = err.status + ' : ' + err.statusText;
+        alert('Error - ' + errMessage);
+      }
+    });
+  });
 
   $('#list-gamesPlayed-btn').click(() => {
     $.ajax({
