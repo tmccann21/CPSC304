@@ -14,7 +14,7 @@
   </p>
   <div class="form-group">
 	  <label for="game-time">Time: </label>
-	  <input type="datetime-local" class="form-control" id="game-time" placeholder= "Enter a time">
+	  <input type="datetime-local" class="form-control" id="game-time" placeholder= "Enter a time" min="1990-01-01T00:00" max="9999-12-31-T11:59">
   </div>
   <div class="form-group">
 	  <label for="game-loc"> Location: </label>
@@ -28,9 +28,18 @@
 	<label for="team2-name"> Team 2: </label>
 	<input type="string" class="form-group" id="team2-name" placeholder= "Enter a team">
   </div>
-  <button type="button" id="add-gamesPlayed-btn">Add Game</button>
+  <div class="form-group">		
+	<label for="team1-score"> Team 1 Score: </label>
+	<input type="string" class="form-group" id="team1-score" placeholder= "Enter score">
+  </div>
+  <div class="form-group">		
+	<label for="team2-score"> Team 2 Score: </label>
+	<input type="string" class="form-group" id="team2-score" placeholder= "Enter score">
+  </div>
 
-  <button type="button" id="get-gamesPlayed-btn">List Games Played</button>
+  <button type="button" id="add-gamesPlayed-btn">Add Game</button>
+  <button type="button" id="get-gamesPlayed-btn">Find Game(s)</button>
+  <button type="button" id="list-gamesPlayed-btn">List All Games Played</button>
 </div>
 </body>
 </html>
