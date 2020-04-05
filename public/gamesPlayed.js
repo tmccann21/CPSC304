@@ -10,12 +10,7 @@ const teamToText = (teams) => {
   },'');
 }
 
-$(document).ready(function() {
-  const queryResult = $('#query-result');
-  const teamBox = $('#team-box');
-  const gameBox = $('#game-box');
-
-  // query data for team and game on startup
+const updateGamesTable = (gameBox) => {
   $.ajax({
     type: 'GET',
     url: 'g',
@@ -27,7 +22,9 @@ $(document).ready(function() {
       alert('Error - ' + errMessage);
     }
   });
+}
 
+const updateTeamsTable = (teamBox) => {
   $.ajax({
     type: 'GET',
     url: 't',
@@ -39,7 +36,16 @@ $(document).ready(function() {
       alert('Error - ' + errMessage);
     }
   });
+}
 
+$(document).ready(function() {
+  const queryResult = $('#query-result');
+  const teamBox = $('#team-box');
+  const gameBox = $('#game-box');
+
+  // query data for team and game on startup
+  updateGamesTable(gameBox);
+  updateTeamsTable(teamBox);
 
   // button functions
 
@@ -72,19 +78,20 @@ $(document).ready(function() {
   });
 
   $('#find-gamesPlayed-btn').click(() => {
-    var gTime = $('#game-time').val();
-    var gLoc = $('#game-loc').val();
-    var gT1N =  $('#team1-name').val();
-    var gT2N = $('#team2-name').val();
+    // var gTime = $('#game-time').val();
+    // var gLoc = $('#game-loc').val();
+    var gT1N =  $('#find-team1-name').val();
+    var gT2N = $('#find-team2-name').val();
 
-    gTime = (gTime == "") ? '%' : gTime;
-    gLoc = (gLoc == "") ? '%' : gLoc;
-    gT1N = (gT1N == "") ? '%' : gT1N;
-    gT1N = (gT2N == "") ? '%' : gT2N;
+    // gTime = (gTime == "") ? '%' : gTime;
+    // gLoc = (gLoc == "") ? '%' : gLoc;
+    // gT1N = (gT1N == "") ? '%' : gT1N;
+    gT2N = (gT2N == "") ? '%' : gT2N;
     
     $.ajax({
       type: 'GET',
-      url: 'gp/' + gTime + '/' + gLoc + '/' + gT1N + '/' + gT2N,
+      // url: 'gp/' + gTime + '/' + gLoc + '/' + gT1N + '/' + gT2N,
+      url: 'gp/' + gT1N + '/' + gT2N,
       success: (response) => {
         queryResult.text(rowsToTextBox(response));
       },
@@ -108,11 +115,11 @@ $(document).ready(function() {
     // creates an entry in games first so there is no fkey violation
     $.ajax({
       type: 'POST',
-      url: 'games',
+      url: 'g',
       data: JSON.stringify(gamesPlayedRequestPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text("Successfully added : \n" + response.row)
+        updateGamesTable(gameBox);
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -120,15 +127,17 @@ $(document).ready(function() {
       }
     })
 
+
     $.ajax({
       type: 'POST',
       url: 'gp',
       data: JSON.stringify(gamesPlayedRequestPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.text("Successfully added a game played: \n" + response.row);
       },
       error: (err) => {
+        queryResult.text("Could not add game");
         var errMessage = err.status + ': ' + err.statusText;
         alert('Error - ' + errMessage); 
       }

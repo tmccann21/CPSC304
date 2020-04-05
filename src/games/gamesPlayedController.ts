@@ -19,10 +19,11 @@ export interface ITeam extends IGame {
 export interface IGamePlayedController {
 	createGame: (info: IGame) => Promise<IGame>;
 	getAllGames: () => Promise<IGame[]>;
-	getGamesPlayed: (time: string, location: string, team1Name: string, team2Name: string) => Promise<IGamePlayed[]>;
+	getGamesPlayed: (team1Name: string, team2Name: string) => Promise<IGamePlayed[]>;
 	createGamePlayed: (info: IGamePlayed) => Promise<IGamePlayed>;
 	getAllGamesPlayed: () => Promise<IGamePlayed[]>;
 	getAllTeamNames: () => Promise<ITeam[]>;
+	// getTeamName: (teamName: string) => Promise<ITeam>;
 }
 
 const createGameQuery = `
@@ -37,7 +38,6 @@ VALUES ($[time], $[location], $[team1Name], $[team2Name], $[team1Score], $[team2
 RETURNING (time, location, team1Name, team2Name, team1Score, team2Score);
 `
 
-
 // better guarantee of fkey constraint
 // const createGamePlayedQuery = `
 // INSERT INTO gameplayed (time, location, team1Name, team2Name, team1Score, team2Score)
@@ -46,13 +46,10 @@ RETURNING (time, location, team1Name, team2Name, team1Score, team2Score);
 // `
  
 const getGamePlayedQuery = `
-SELECT (time, location, team1Name, team2Name)
+SELECT (time, location, team1Name, team2Name, team1Score, team2Score)
 FROM gameplayed
-WHERE (team1Name = $[qT1] AND team2Name = $[qT2]) OR (team1Name = $[qT2] AND team2Name = $[qT1])
-AND
-location = $[qLoc]
-AND
-time = $[qTime];
+WHERE 
+((team1Name = $[team1Name] AND team2Name = $[team2Name]) OR (team1Name = $[team2Name] AND team2Name = $[team1Name]))
 `
 
 const getAllGamesPlayedQuery = `
@@ -83,14 +80,14 @@ const gamePlayedController: ((db: pgPromise.IDatabase<{}>) => IGamePlayedControl
 		return db.manyOrNone(getAllTeamNamesQuery);
 	},
 
-	getGamesPlayed: async (time, location, team1Name, team2Name) => {
-		var qTime, qLoc, qT1, qT2;
-		qTime = time;
-		qLoc =  location;
-		qT1 = team1Name;
-		qT2 =team2Name;
-		return db.manyOrNone(getGamePlayedQuery, { qTime, qLoc , qT1, qT2 });
+	// getGamesPlayed: async (time, location, team1Name, team2Name) => {
+	// 	return db.manyOrNone(getGamePlayedQuery, { time, location , team1Name, team2Name });
+	// },
+
+	getGamesPlayed: async (team1Name, team2Name) => {
+		return db.manyOrNone(getGamePlayedQuery, {team1Name, team2Name});
 	},
+
 	getAllGamesPlayed: async () => {
 		return db.manyOrNone(getAllGamesPlayedQuery);
 	},
