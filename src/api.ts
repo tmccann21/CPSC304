@@ -45,6 +45,10 @@ const api = (app: express.Application) => {
     res.render('gamesplayed.ejs');
   })
 
+  app.get('/positioninfo', function(req, res) {
+    res.render('positionInfo.ejs');
+  })
+
   userRoutes(app, db);
   playerRoutes(app, db);
   coachRoutes(app, db); 
