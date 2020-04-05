@@ -8,6 +8,8 @@ import playerRoutes from './users/subUserRoutes';
 import {coachRoutes} from './users/subUserRoutes';
 import {managerRoutes} from './users/subUserRoutes'; 
 import gamesPlayedRoutes from './games/gamesPlayedRoutes';
+import positionRoutes from './user_info/pInfoRoute';
+import {pStatRoutes} from './user_info/pInfoRoute'; 
 
 export type RouteRegistrar = (app, db) => void;
 
@@ -48,6 +50,8 @@ const api = (app: express.Application) => {
   coachRoutes(app, db); 
   managerRoutes(app, db); 
   gamesPlayedRoutes(app, db);
+  positionRoutes(app, db); 
+  pStatRoutes(app, db); 
   
   app.use(function (req, res, next) {
     log.info(`${req.method} ${req.path} [${res.statusCode}]`);
