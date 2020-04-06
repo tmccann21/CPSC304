@@ -107,4 +107,26 @@ $(document).ready(function(){
       },
     });
   });
+
+  $('#count-users-btn').click(() => {
+    $.ajax({
+      type: 'GET',
+      url: 'usercount',
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.html(renderResult(response));
+      },
+    });
+  });
+
+  $('#user-proj-btn').click(() => {
+    $.ajax({
+      type: 'GET',
+      url: `user/${$('#user-id-proj').val()}/name`,
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.html(renderResult(response));
+      },
+    });
+  });
 });

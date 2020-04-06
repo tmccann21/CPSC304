@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS teams (
     teamName varchar(64) PRIMARY KEY,
     coachId INT NOT NULL, 
     captainID INT,
-    FOREIGN KEY (coachId) REFERENCES coach (coachId) ON UPDATE CASCADE,
+    FOREIGN KEY (coachId) REFERENCES coach (coachId) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (captainId) REFERENCES player (playerId) ON UPDATE CASCADE ON DELETE SET NULL 
 ); 
 

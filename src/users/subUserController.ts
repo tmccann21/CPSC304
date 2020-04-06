@@ -128,7 +128,7 @@ RETURNING coachId, age, gender;
 `
 
 const deleteCoachQuery = `
-DELETE coach 
+DELETE FROM coach
 WHERE $[searchfield~] = $[searchval]
 RETURNING coachId, age, gender;
 `

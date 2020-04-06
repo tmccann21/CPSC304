@@ -49,7 +49,7 @@ AND P.playerId = U.userId;
 const getPositionsQuery = `
 SELECT P.playerId, U.name, P.positionName
 FROM playsPosition P, Users U
-WHERE P.playerId = U.userId
+WHERE P.playerId = U.userId;
 `
 
 const getPlayerPositionQuery = `
