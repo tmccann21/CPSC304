@@ -6,6 +6,27 @@ const rowsToTextBox = (rows) => {
   },'');
 }
 
+// not a pretty fn but it works lol
+const renderResult = (rows) => {
+  if (!(rows instanceof Array))
+    rows = [rows];
+
+    const headers = Object.keys(rows[0]).reduce((acc, h) => `${acc}<th><div id='cell'>${h}</div></th>`, '');
+  const tableRows = rows.reduce((i, row) => {
+    const strRow = Object.keys(row).reduce((j, c) => `${j}<td><div id='cell'>${row[c]}</div></td>`, '');
+    return `${i}<tr>${strRow}</tr>`;
+  },'')
+  const resultToRender = `
+    <thead>
+      <tr>${headers}</tr>
+    </thead>
+    <tbody>
+      ${tableRows}
+    </tbody>
+  `
+  return resultToRender;
+}
+
 $(document).ready(function(){
   const queryResult = $('#query-result');
   $('#add-user-btn').click(() => {
@@ -24,7 +45,7 @@ $(document).ready(function(){
       data: JSON.stringify(createUserPayload),
       contentType:'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(response.row);
+        queryResult.html(renderResult(response));
       },
     });
   });
@@ -34,7 +55,7 @@ $(document).ready(function(){
       type: 'GET',
       url: 'user',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response));
       },
     });
   });
@@ -53,7 +74,24 @@ $(document).ready(function(){
       data: JSON.stringify(newUserPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response));
+      },
+    });
+  });
+
+  $('#run-join-btn').click(() => {
+    const statsPayload = {
+      "field": $('#stats-fields').val(),
+      "condition": $('#stats-condition').val(),
+    };
+    
+    $.ajax({
+      type: 'POST',
+      url: 'stats/join',
+      data: JSON.stringify(statsPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.html(renderResult(response));
       },
     });
   });

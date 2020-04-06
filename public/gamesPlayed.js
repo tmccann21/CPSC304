@@ -1,7 +1,22 @@
-const rowsToTextBox = (rows) => {
-  return rows.reduce((acc, cur) => {
-    return `${acc}${cur.row}\n\r`;
-  },'');
+// not a pretty fn but it works lol
+const renderResult = (rows) => {
+  if (!(rows instanceof Array))
+    rows = [rows];
+
+    const headers = Object.keys(rows[0]).reduce((acc, h) => `${acc}<th><div id='cell'>${h}</div></th>`, '');
+  const tableRows = rows.reduce((i, row) => {
+    const strRow = Object.keys(row).reduce((j, c) => `${j}<td><div id='cell'>${row[c]}</div></td>`, '');
+    return `${i}<tr>${strRow}</tr>`;
+  },'')
+  const resultToRender = `
+    <thead>
+      <tr>${headers}</tr>
+    </thead>
+    <tbody>
+      ${tableRows}
+    </tbody>
+  `
+  return resultToRender;
 }
 
 const teamToText = (teams) => {
@@ -54,7 +69,7 @@ $(document).ready(function() {
       type: 'GET',
       url: 'g',
       success: (response) => {
-        queryResult.text("Games Played: \n" + rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ' : ' + err.statusText;
@@ -68,7 +83,7 @@ $(document).ready(function() {
       type: 'GET',
       url: 'gp',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ' : ' + err.statusText;
@@ -93,7 +108,7 @@ $(document).ready(function() {
       // url: 'gp/' + gTime + '/' + gLoc + '/' + gT1N + '/' + gT2N,
       url: 'gp/' + gT1N + '/' + gT2N,
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -134,7 +149,7 @@ $(document).ready(function() {
       data: JSON.stringify(gamesPlayedRequestPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text("Successfully added a game played: \n" + response.row);
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         queryResult.text("Could not add game");

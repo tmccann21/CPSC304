@@ -1,9 +1,23 @@
-const rowsToTextBox = (rows) => {
-    return rows.reduce((acc, cur) => {
-        console.log(cur); 
-        return `${acc}${cur.row}\n\r`;
-    },'');
-}
+// not a pretty fn but it works lol
+const renderResult = (rows) => {
+    if (!(rows instanceof Array))
+      rows = [rows];
+  
+      const headers = Object.keys(rows[0]).reduce((acc, h) => `${acc}<th><div id='cell'>${h}</div></th>`, '');
+    const tableRows = rows.reduce((i, row) => {
+      const strRow = Object.keys(row).reduce((j, c) => `${j}<td><div id='cell'>${row[c]}</div></td>`, '');
+      return `${i}<tr>${strRow}</tr>`;
+    },'')
+    const resultToRender = `
+      <thead>
+        <tr>${headers}</tr>
+      </thead>
+      <tbody>
+        ${tableRows}
+      </tbody>
+    `
+    return resultToRender;
+  }
 
 const positionToTextBox = (rows) => {
     return rows.reduce((acc, cur) => {
@@ -19,7 +33,7 @@ $(document).ready(function () {
             type: 'GET',
             url: 'position',
             success: (response) => {
-                queryResult.text(rowsToTextBox(response));
+                queryResult.html(renderResult(response))
             },
         });
     });
@@ -31,7 +45,7 @@ $(document).ready(function () {
             type: 'GET',
             url: 'position/player/' + pid,
             success: (response) => {
-                queryResult.text(positionToTextBox(response));
+                queryResult.html(renderResult(response))
             }
         })
     });
@@ -43,7 +57,7 @@ $(document).ready(function () {
             type: 'GET',
             url: 'position/' + name,
             success: (response) => {
-                queryResult.text(rowsToTextBox(response));
+                queryResult.html(renderResult(response))
             }
         })
     });
@@ -60,7 +74,7 @@ $(document).ready(function () {
             data: JSON.stringify(newPositionPayload),
             contentType: 'application/json; charset=utf-8',
             success: (response) => {
-                queryResult.text(rowsToTextBox(response));
+                queryResult.html(renderResult(response))
             },
         });
     });

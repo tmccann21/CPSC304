@@ -56,14 +56,14 @@ export interface IManagerController {
 }
 
 const getPlayerQuery = `
-SELECT (P.playerId, U.name, P.age, P.height, P.jerseyNumber)
+SELECT P.playerId, U.name, P.age, P.height, P.jerseyNumber
 FROM player P, users U
 WHERE P.playerId = $[playerId] 
 AND P.playerId = U.userId;
 `
 
 const getPlayersQuery = `
-SELECT (P.playerId, U.name, P.age, P.height, P.jerseyNumber)
+SELECT P.playerId, U.name, P.age, P.height, P.jerseyNumber
 FROM player P, users U
 WHERE P.playerId = U.userId;
 `
@@ -71,7 +71,7 @@ WHERE P.playerId = U.userId;
 const addPlayerQuery = `
 INSERT INTO player (playerId, age, height, jerseyNumber) 
 VALUES ($[playerId], $[age], $[height], $[jerseyNumber])
-RETURNING (playerId, age, height, jerseyNumber);
+RETURNING playerId, age, height, jerseyNumber;
 `
 
 const updatePlayerAgeQuery = `
@@ -102,14 +102,14 @@ RETURNING (playerId, age, height, jerseyNumber);
 `
 
 const getCoachQuery = `
-SELECT (C.coachId, U.name, C.age, C.gender)
+SELECT C.coachId, U.name, C.age, C.gender
 FROM coach C, users U
 WHERE C.coachId = $[coachId]
 AND C.coachId = U.userId;
 `
 
 const getCoachesQuery = `
-SELECT (C.coachId, U.name, C.age, C.gender)
+SELECT C.coachId, U.name, C.age, C.gender
 FROM coach C, users U
 WHERE C.coachId = U.userId;
 `
@@ -117,7 +117,7 @@ WHERE C.coachId = U.userId;
 const addCoachQuery = `
 INSERT INTO coach (coachId, age, gender)
 VALUES ($[coachId], $[age], $[gender])
-RETURNING (coachId, age, gender);
+RETURNING coachId, age, gender;
 `
 
 const updateCoachQuery = `
@@ -134,14 +134,14 @@ RETURN (coachId, age, gender);
 `
 
 const getManagerQuery = `
-SELECT (M.managerId, U.name)
+SELECT M.managerId, U.name
 FROM leaguemanager M, users U
 WHERE M.managerId = $[managerId]
 AND M.managerId = U.userId;
 `
 
 const getManagersQuery = `
-SELECT (M.managerId, U.name)
+SELECT M.managerId, U.name
 FROM leaguemanager M, users U
 WHERE M.managerId = U.userId;
 `
@@ -149,7 +149,7 @@ WHERE M.managerId = U.userId;
 const addManagerQuery = `
 INSERT INTO leaguemanager (managerId)
 VALUES ($[managerId])
-RETURNING (managerId);
+RETURNING managerId;
 `
 
 const deleteManagerQuery = `

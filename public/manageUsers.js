@@ -1,7 +1,22 @@
-const rowsToTextBox = (rows) => {
-  return rows.reduce((acc, cur) => {
-    return `${acc}${cur.row}\n\r`;
-  },'');
+// not a pretty fn but it works lol
+const renderResult = (rows) => {
+  if (!(rows instanceof Array))
+    rows = [rows];
+
+    const headers = Object.keys(rows[0]).reduce((acc, h) => `${acc}<th><div id='cell'>${h}</div></th>`, '');
+  const tableRows = rows.reduce((i, row) => {
+    const strRow = Object.keys(row).reduce((j, c) => `${j}<td><div id='cell'>${row[c]}</div></td>`, '');
+    return `${i}<tr>${strRow}</tr>`;
+  },'')
+  const resultToRender = `
+    <thead>
+      <tr>${headers}</tr>
+    </thead>
+    <tbody>
+      ${tableRows}
+    </tbody>
+  `
+  return resultToRender;
 }
 
 $(document).ready(function(){
@@ -12,7 +27,7 @@ $(document).ready(function(){
         type: 'GET',
         url: 'player',
         success: (response) => {
-          queryResult.text((rowsToTextBox(response)));
+          queryResult.html(renderResult(response))
         },
       });
     } else if ($('#coach-check').is(":checked")){
@@ -20,7 +35,7 @@ $(document).ready(function(){
         type: 'GET',
         url: 'coach',
         success: (response) => {
-          queryResult.text((rowsToTextBox(response)));
+          queryResult.html(renderResult(response))
         },
       });
     } else if ($('#manager-check').is(":checked")){
@@ -28,7 +43,7 @@ $(document).ready(function(){
         type: 'GET',
         url: 'manager',
         success: (response) => {
-          queryResult.text((rowsToTextBox(response)));
+          queryResult.html(renderResult(response))
         },
       });
     }
@@ -48,7 +63,7 @@ $(document).ready(function(){
       data: JSON.stringify(newPlayerPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -70,7 +85,7 @@ $(document).ready(function(){
       data: JSON.stringify(newCoachPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -90,7 +105,7 @@ $(document).ready(function(){
       data: JSON.stringify(newManagerPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -98,7 +113,6 @@ $(document).ready(function(){
       }
     });
   });
-
   $('#update-player-btn').click(() => {
     const updatePlayerPayload = {
       "updatefield": $('#player-updatef').val(),
@@ -210,6 +224,4 @@ $(document).ready(function(){
       }
     });
   });
-
-
 });

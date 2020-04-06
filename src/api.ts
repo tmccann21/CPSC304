@@ -9,7 +9,8 @@ import {coachRoutes} from './users/subUserRoutes';
 import {managerRoutes} from './users/subUserRoutes'; 
 import gamesPlayedRoutes from './games/gamesPlayedRoutes';
 import positionRoutes from './user_info/pInfoRoute';
-import {pStatRoutes} from './user_info/pInfoRoute'; 
+import {pStatRoutes} from './user_info/pInfoRoute';
+import statsRoutes from './stats/statsRoutes';
 
 export type RouteRegistrar = (app, db) => void;
 
@@ -56,6 +57,8 @@ const api = (app: express.Application) => {
   gamesPlayedRoutes(app, db);
   positionRoutes(app, db); 
   pStatRoutes(app, db); 
+  statsRoutes(app, db); 
+
   
   app.use(function (req, res, next) {
     log.info(`${req.method} ${req.path} [${res.statusCode}]`);
