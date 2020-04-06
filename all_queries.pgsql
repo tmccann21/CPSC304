@@ -34,7 +34,7 @@ DELETE FROM player
 WHERE $[searchfield~] = $[searchval]
 RETURNING playerId, age, height, jerseyNumber;
 
-DELETE coach 
+DELETE FROM coach
 WHERE $[searchfield~] = $[searchval]
 RETURNING coachId, age, gender;
 
