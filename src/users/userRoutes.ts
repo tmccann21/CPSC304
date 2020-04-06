@@ -28,6 +28,17 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
+  app.get('/usercount', async (req: any, res) => {
+    try {
+      const response = await controller.countUsers();
+      res.json(response);
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 500;
+      res.json({error: err.message || err});
+    }
+  });
+
   app.post('/user', async (req: any, res) => {
     try {
       if (!req.body || !req.body.name || ! req.body.email || !req.body.phone || !req.body.password) {

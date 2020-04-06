@@ -14,6 +14,7 @@ export interface IUserController {
   getUser: (userId: string) => Promise<IUserResponse>;
   createUser: (info: IUserInfo, password: string) => Promise<IUserResponse>;
   getUsers: () => Promise<IUserResponse[]>;
+  countUsers: () => Promise<{}>;
 }
 
 const createUserQuery = `
@@ -33,6 +34,11 @@ SELECT userId, name, email, phone
 FROM users;
 `
 
+const mostRecentUser = `
+SELECT count(*)
+FROM users;
+`
+
 const userController: ((db: pgPromise.IDatabase<{}>) => IUserController) = (db) => ({
   getUser: async (userId: string) => {
     return db.one(getUserQuery, { userId });
@@ -43,6 +49,9 @@ const userController: ((db: pgPromise.IDatabase<{}>) => IUserController) = (db) 
   createUser: async (info: IUserInfo, password: string) => {
     return db.one(createUserQuery, { ...info, password });
   },
+  countUsers: async () => {
+    return db.one(mostRecentUser);
+  }
 })
 
 export default userController;
