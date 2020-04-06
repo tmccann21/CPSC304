@@ -19,7 +19,7 @@ export interface ITeam extends IGame {
 export interface IGamePlayedController {
 	createGame: (info: IGame) => Promise<IGame>;
 	getAllGames: () => Promise<IGame[]>;
-	getGamesPlayed: (team1Name: string, team2Name: string) => Promise<IGamePlayed[]>;
+	getGamesPlayed: (team1Name: string, team2Name: string, location: string) => Promise<IGamePlayed[]>;
 	createGamePlayed: (info: IGamePlayed) => Promise<IGamePlayed>;
 	getAllGamesPlayed: () => Promise<IGamePlayed[]>;
 	getAllTeamNames: () => Promise<ITeam[]>;
@@ -35,7 +35,7 @@ RETURNING (time, location);
 const createGamePlayedQuery = `
 INSERT INTO gameplayed (time, location, team1Name, team2Name, team1Score, team2Score)
 VALUES ($[time], $[location], $[team1Name], $[team2Name], $[team1Score], $[team2Score])
-RETURNING (time, location, team1Name, team2Name, team1Score, team2Score);
+RETURNING time, location, team1Name, team2Name, team1Score, team2Score;
 `
 
 // better guarantee of fkey constraint
@@ -46,10 +46,12 @@ RETURNING (time, location, team1Name, team2Name, team1Score, team2Score);
 // `
  
 const getGamePlayedQuery = `
-SELECT (time, location, team1Name, team2Name, team1Score, team2Score)
+SELECT time, location, team1Name, team2Name, team1Score, team2Score
 FROM gameplayed
 WHERE 
-((team1Name = $[team1Name] AND team2Name = $[team2Name]) OR (team1Name = $[team2Name] AND team2Name = $[team1Name]))
+((team1Name LIKE $[t1] AND team2Name LIKE $[t2]) OR (team1Name LIKE $[t2] AND team2Name LIKE $[t1]))
+AND
+location LIKE $[loc];
 `
 
 const getAllGamesPlayedQuery = `
@@ -58,12 +60,12 @@ FROM gameplayed;
 `
 
 const getAllGamesQuery = `
-SELECT (time, location)
+SELECT time, location
 FROM games;
 `
 
 const getAllTeamNamesQuery = `
-SELECT (teamName)
+SELECT teamName
 FROM teams;
 `
 
@@ -80,8 +82,11 @@ const gamePlayedController: ((db: pgPromise.IDatabase<{}>) => IGamePlayedControl
 		return db.manyOrNone(getAllTeamNamesQuery);
 	},
 
-	getGamesPlayed: async (team1Name, team2Name) => {
-		return db.manyOrNone(getGamePlayedQuery, {team1Name, team2Name});
+	getGamesPlayed: async (team1Name, team2Name, location) => {
+		var t1 = (team1Name == '%25') ? '%' : team1Name;
+		var t2 = (team2Name == '%25') ? '%' : team2Name;
+		var loc = (location == '%25') ? '%' : location;
+		return db.manyOrNone(getGamePlayedQuery, {t1, t2, loc});
 	},
 
 	getAllGamesPlayed: async () => {
