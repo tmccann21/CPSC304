@@ -24,6 +24,17 @@ const statsRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.statusCode = 404;
       res.json({error: err.message || err});
     }
+  });
+
+  app.post('/stats/division', async (req: any, res) => {
+    try {
+      const response = await controller.runDivideQuery();
+      res.json(response);
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
+      res.json({error: err.message || err});
+    }
   })
 }
 
