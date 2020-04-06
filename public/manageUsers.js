@@ -56,7 +56,7 @@ $(document).ready(function(){
       "height": $('#player-height').val(),
       "jerseyNumber": $('#player-numb').val(),
     };
-    
+
     $.ajax({
       type: 'POST',
       url: 'player',
@@ -106,6 +106,117 @@ $(document).ready(function(){
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
         queryResult.html(renderResult(response))
+      },
+      error: (err) => {
+        var errMessage = err.status + ': ' + err.statusText;
+        alert('Error - ' + errMessage); 
+      }
+    });
+  });
+  $('#update-player-btn').click(() => {
+    const updatePlayerPayload = {
+      "updatefield": $('#player-updatef').val(),
+      "updateval": $('#player-updatev').val(),
+      "searchval": $('#update-player-searchv').val(),
+    };
+    
+    console.log(updatePlayerPayload); 
+
+    $.ajax({
+      type: 'PUT',
+      url: 'player',
+      data: JSON.stringify(updatePlayerPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.text(rowsToTextBox(response));
+      },
+      error: (err) => {
+        var errMessage = err.status + ': ' + err.statusText;
+        alert('Error - ' + errMessage); 
+      }
+    });
+  });
+
+  $('#update-coach-btn').click(() => {
+    const updateCoachPayload = {
+      "updatefield": $('#coach-updatef').val(),
+      "updateval": $('#coach-updatev').val(),
+      "searchval": $('#update-coach-searchv').val(),
+    };
+
+    console.log(updateCoachPayload);
+    
+    $.ajax({
+      type: 'PUT',
+      url: 'coach',
+      data: JSON.stringify(updateCoachPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.text(rowsToTextBox(response));
+      },
+      error: (err) => {
+        var errMessage = err.status + ': ' + err.statusText;
+        alert('Error - ' + errMessage); 
+      }
+    });
+  });
+
+  $('#delete-player-btn').click(() => {
+    const deletePlayerPayload = {
+      "searchfield": $('#delete-player-searchf').val(),
+      "searchval": $('#delete-player-searchv').val(),
+    };
+    
+    console.log(deletePlayerPayload);
+
+    $.ajax({
+      type: 'DELETE',
+      url: 'player',
+      data: JSON.stringify(deletePlayerPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.text(rowsToTextBox(response));
+      },
+      error: (err) => {
+        var errMessage = err.status + ': ' + err.statusText;
+        alert('Error - ' + errMessage); 
+      }
+    });
+  });
+
+  $('#delete-coach-btn').click(() => {
+    const deleteCoachPayload = {
+      "searchfield": $('#delete-coach-searchf').val(),
+      "searchval": $('#delete-coach-searchv').val(),
+    };
+    
+    $.ajax({
+      type: 'DELETE',
+      url: 'coach',
+      data: JSON.stringify(deleteCoachPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.text(rowsToTextBox(response));
+      },
+      error: (err) => {
+        var errMessage = err.status + ': ' + err.statusText;
+        alert('Error - ' + errMessage); 
+      }
+    });
+  });
+
+  $('#delete-manager-btn').click(() => {    
+    const deleteManagerPayload = {
+      "managerId": $('#delete-manager').val(),
+    };
+
+    $.ajax({
+      type: 'DELETE',
+      url: 'manager',
+      data: JSON.stringify(deleteManagerPayload),
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.text(rowsToTextBox(response));
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;

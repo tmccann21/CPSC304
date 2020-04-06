@@ -1,70 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="./manageUsers.js"></script>
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
+
 <div class="container-fluid bg-3 text-center">    
   <h3>Player Database</h3>
   <div id='table-container'>
     <p> Query Result Table </p>
     <table id="query-result"></table>
   </div>
-  <div class="custom-control custom-radio custom-control-inline"">
-    <input type="radio" id="player-check" name="customRadio" class="custom-control-input">
-    <label class="custom-control-label" for="customRadio1">Players</label>
-  </div>  
-  <div class="custom-control custom-radio custom-control-inline"">
-    <input type="radio" id="coach-check" name="customRadio" class="custom-control-input">
-    <label class="custom-control-label" for="customRadio2">Coaches</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline"">
-    <input type="radio" id="manager-check" name="customRadio" class="custom-control-input">
-    <label class="custom-control-label" for="customRadio2">Managers</label>
-  </div>
-  <button type="button" id="get-users-btn">List Users</button>
-  
-  <div class ="form-group">
-    <label for="player-id">Player ID: </label>
-    <input type="number" class="form-control" id="player-id" placeholder="Enter User ID">
-  </div>
-  <div class ="form-group">
-    <label for="player-age">Age: </label>
-    <input type="number" class="form-control" id="player-age" placeholder="Enter Age">
-  </div>
-  <div class ="form-group">
-    <label for="player-height">Height: </label>
-    <input type="number" class="form-control" id="player-height" placeholder="Enter Height (cm)">
-  </div>
-  <div class ="form-group">
-    <label for="player-numb">Jersey Number: </label>
-    <input type="number" class="form-control" id="player-numb" placeholder="Enter Jersey Number">
-  </div>
-  <button type="button" id="add-player-btn">Add Player</button>
+    <div class="custom-control custom-radio">
+      <input type="radio" id="player-check" name="customRadio" class="custom-control-input">
+      <label class="custom-control-label" for="customRadio1">Players</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input type="radio" id="coach-check" name="customRadio" class="custom-control-input">
+      <label class="custom-control-label" for="customRadio2">Coaches</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input type="radio" id="manager-check" name="customRadio" class="custom-control-input">
+      <label class="custom-control-label" for="customRadio2">Managers</label>
+    </div>
+    <button type="button" id="get-users-btn">List Users</button>
 
-  <div class ="form-group">
-    <label for="coach-id">Coach ID: </label>
-    <input type="number" class="form-control" id="coach-id" placeholder="Enter User ID">
-  </div>
-  <div class ="form-group">
-    <label for="coach-age">Age: </label>
-    <input type="number" class="form-control" id="coach-age" placeholder="Enter Age">
-  </div>
-  <div class ="form-group">
-    <label for="coach-gender">Gender: </label>
-    <input type="text" class="form-control" id="coach-gender" placeholder="Enter Gender">
-  </div>
-  <button type="button" id="add-coach-btn">Add Coach</button>
+    <div class="form-group">
+      <label for="player-id">Player ID: </label>
+      <input type="number" class="form-control" id="player-id" placeholder="Enter User ID">
+    </div>
+    <div class="form-group">
+      <label for="player-age">Age: </label>
+      <input type="number" class="form-control" id="player-age" placeholder="Enter Age">
+    </div>
+    <div class="form-group">
+      <label for="player-height">Height: </label>
+      <input type="number" class="form-control" id="player-height" placeholder="Enter Height (cm)">
+    </div>
+    <div class="form-group">
+      <label for="player-numb">Jersey Number: </label>
+      <input type="number" class="form-control" id="player-numb" placeholder="Enter Jersey Number">
+    </div>
+    <button type="button" id="add-player-btn">Add Player</button>
 
-  <div class ="form-group">
-    <label for="manager-id">Manager ID: </label>
-    <input type="number" class="form-control" id="manager-id" placeholder="Enter User ID">
-  </div>
-  <button type="button" id="add-manager-btn">Add Manager</button>
+    <div class="form-group">
+      <label for="coach-id">Coach ID: </label>
+      <input type="number" class="form-control" id="coach-id" placeholder="Enter User ID">
+    </div>
+    <div class="form-group">
+      <label for="coach-age">Age: </label>
+      <input type="number" class="form-control" id="coach-age" placeholder="Enter Age">
+    </div>
+    <div class="form-group">
+      <label for="coach-gender">Gender: </label>
+      <input type="text" class="form-control" id="coach-gender" placeholder="Enter Gender">
+    </div>
+    <button type="button" id="add-coach-btn">Add Coach</button>
 
-</div>
+    <div class="form-group">
+      <label for="manager-id">Manager ID: </label>
+      <input type="number" class="form-control" id="manager-id" placeholder="Enter User ID">
+    </div>
+    <button type="button" id="add-manager-btn">Add Manager</button>
+
+    <form class="form-inline">
+      <label for="update-player-searchv">PlayerId:</label>
+      <input type="text" class="form-control" id="update-player-searchv" placeholder="Enter Id">
+      <select class="custom-select custom-select-sm" id="player-updatef">
+        <option selected>New Value: </option>
+        <option value="age">age</option>
+        <option value="height">height</option>
+        <option value="jerseyNumber">jerseyNumber</option>
+      </select>
+      <input type="text" class="form-control" id="player-updatev" placeholder="Enter Search Value">
+      <button type="button" id="update-player-btn">Update Player</button>
+    </form>
+
+    <form class="form-inline">
+        <label for="update-coach-searchv">CoachId:</label>
+        <input type="text" class="form-control" id="update-coach-searchv" placeholder="Enter Coach Id">
+        <label for="coach-updatev">Update Coach Age:</label>
+        <input type="text" class="form-control" id="coach-updatev" placeholder="Enter new age">
+        <button type="button" id="update-coach-btn">Update coach</button>
+    </form>
+
+    <form class="form-inline">
+        <label for="delete-player-searchf">Delete Player By:</label>
+        <select class="custom-select custom-select-sm" id="delete-player-searchf">
+          <option selected>Select Player By: </option>
+          <option value="playerId">playerId</option>
+          <option value="age">age</option>
+          <option value="height">height</option>
+          <option value="jerseyNumber">jerseyNumber</option>
+        </select>
+        <input type="text" class="form-control" id="delete-player-searchv" placeholder="Enter Search Value">
+        <button type="button" id="delete-player-btn">Delete Player</button>
+    </form>
+
+    <form class="form-inline">
+        <label for="delete-coach-searchf">Delete Coach By:</label>
+        <select class="custom-select custom-select-sm" id="delete-coach-searchf">
+          <option selected>Select Coach By: </option>
+          <option value="coachId">coachId</option>
+          <option value="age">age</option>
+          <option value="gender">gender</option>
+        </select>
+        <input type="text" class="form-control" id="delete-coach-searchv" placeholder="Enter Search Value">
+        <button type="button" id="delete-coach-btn">Delete Coach</button>
+    </form>
+
+    <form class="form-inline">
+        <label for="delete-manager">ManagerId:</label>
+        <input type="number" class="form-control" id="delete-manager" placeholder="Enter Search Value">
+        <button type="button" id="delete-manager-btn">Delete Manager</button>
+    </form>
+
+  </div>
 </body>
+
 </html>
