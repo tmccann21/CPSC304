@@ -19,7 +19,14 @@ p.info-box {
   width: 820px;
   overflow-y: scroll;
   margin-bottom: 20px;
+}
 
+#gp-table-container {
+  display: inline-block;
+  max-height: 400px;
+  width: 820px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
 }
 
 #query-result #cell {
@@ -45,15 +52,6 @@ th #cell {
 
 td #cell {
   line-height: 35px;
-}
-
-#game-box {
-  max-width: 500px;
-  min-height: 300px;
-  max-height: 300px;
-  background: #e0e0e0;
-  padding: 20px;
-  overflow:auto;
 }
 
 #team-box {

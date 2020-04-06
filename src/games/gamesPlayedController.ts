@@ -53,7 +53,7 @@ WHERE
 `
 
 const getAllGamesPlayedQuery = `
-SELECT (time, location, team1Name, team2Name, team1Score, team2Score)
+SELECT time, location, team1Name, team2Name, team1Score, team2Score
 FROM gameplayed;
 `
 
@@ -79,10 +79,6 @@ const gamePlayedController: ((db: pgPromise.IDatabase<{}>) => IGamePlayedControl
 	getAllTeamNames: async() => {
 		return db.manyOrNone(getAllTeamNamesQuery);
 	},
-
-	// getGamesPlayed: async (time, location, team1Name, team2Name) => {
-	// 	return db.manyOrNone(getGamePlayedQuery, { time, location , team1Name, team2Name });
-	// },
 
 	getGamesPlayed: async (team1Name, team2Name) => {
 		return db.manyOrNone(getGamePlayedQuery, {team1Name, team2Name});

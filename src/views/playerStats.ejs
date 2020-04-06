@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./playerStats.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="container-fluid bg-3 text-center">    
+  <h3>Player Statistics: </h3>
+  <div id='table-container'>
+    <p> Query Result Table </p>
+    <table id="query-result"></table>
+  </div>
+  <button type="button" id="get-stats-btn">Get All Stats</button>
+  <button type="button" id="get-avgstats-btn">Get Average Stats</button>
+  <button type="button" id="get-totalstats-btn">Get Total Stats</button>
+  <div class="form-group">
+	  <label for="stats-pid">Player Id: </label>
+	  <input type="number" class="form-control" id="pid" placeholder= "Enter Player ID">
+  </div>
+  <div class="form-group">
+    <label for="year">Year: </label>
+    <input type="number" class="form-control" id="year" placeholder= "2020">
+  </div>
+  <div class="form-group">
+    <label for="goals">Goals: </label>
+    <input type="number" class="form-control" id="goals">
+  </div>
+  <div class="form-group">
+    <label for="assists">Assists: </label>
+    <input type="number" class="form-control" id="assists">
+  </div>
+  <div class="form-group">
+    <label for="saves">Saves: </label>
+    <input type="number" class="form-control" id="saves">
+  </div>
+  <div class="form-group">
+    <label for="plusminus">+/-: </label>
+    <input type="number" class="form-control" id="plusminus">
+  </div>
+  <button type="button" id="stats-pid-btn">Player Stats</button>
+  <button type="button" id="stats-pavg-btn">Avg Stats for Player</button>
+  <button type="button" id="stats-ptotal-btn">Total Stats for Player</button>
+  <button type="button" id="add-stats-btn">Add Stats</button>
+
+  <div class="form-group">
+    <label for="stats-count">Number of Queries: </label>
+    <input type="number" class="form-control" id="stats-count" placeholder= "How many rankings?">
+  </div>
+  <button type="button" id="stats-goals-btn">Top Goals</button>
+  <button type="button" id="stats-assists-btn">Top Assists</button>
+  <button type="button" id="stats-saves-btn">Top Saves</button>
+  <button type="button" id="stats-plusminus-btn">Top +/-</button>
+</div>
+</body>
+</html>

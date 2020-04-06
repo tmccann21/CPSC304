@@ -50,6 +50,10 @@ const api = (app: express.Application) => {
     res.render('positionInfo.ejs');
   })
 
+  app.get('/playerstats', function(req, res){
+    res.render('playerStats.ejs');
+  })
+
   userRoutes(app, db);
   playerRoutes(app, db);
   coachRoutes(app, db); 
