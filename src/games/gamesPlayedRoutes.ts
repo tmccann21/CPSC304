@@ -17,17 +17,6 @@ const gamesPlayedRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   })
 
-  app.post('/t', async (req: any, res) => {
-    try {
-      const response = await controller.getAllTeamNames();
-      res.json(response);
-    } catch (err) {
-      log.error(err.message || err);
-      res.statusCode = 404;
-      res.json({ error: err.message || err });
-    }
-  })
-
   app.get('/g', async (req: any, res) => {
     try {
       const response = await controller.getAllGames();
