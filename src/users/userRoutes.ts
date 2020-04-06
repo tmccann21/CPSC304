@@ -28,6 +28,17 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
+  app.get('/user/:id/name', async (req: any, res) => {
+    try {
+      const response = await controller.getUserName(req.params.id);
+      res.json(response);
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
+      res.json({error: err.message || err});
+    }
+  });
+
   app.get('/usercount', async (req: any, res) => {
     try {
       const response = await controller.countUsers();
