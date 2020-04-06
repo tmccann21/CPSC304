@@ -3,7 +3,10 @@ const renderResult = (rows) => {
   if (!(rows instanceof Array))
     rows = [rows];
 
-    const headers = Object.keys(rows[0]).reduce((acc, h) => `${acc}<th><div id='cell'>${h}</div></th>`, '');
+  if (rows.length === 0)
+    return `<p> no results! </p>`
+
+  const headers = Object.keys(rows[0]).reduce((acc, h) => `${acc}<th><div id='cell'>${h}</div></th>`, '');
   const tableRows = rows.reduce((i, row) => {
     const strRow = Object.keys(row).reduce((j, c) => `${j}<td><div id='cell'>${row[c]}</div></td>`, '');
     return `${i}<tr>${strRow}</tr>`;
@@ -120,15 +123,13 @@ $(document).ready(function(){
       "searchval": $('#update-player-searchv').val(),
     };
     
-    console.log(updatePlayerPayload); 
-
     $.ajax({
       type: 'PUT',
       url: 'player',
       data: JSON.stringify(updatePlayerPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -143,8 +144,6 @@ $(document).ready(function(){
       "updateval": $('#coach-updatev').val(),
       "searchval": $('#update-coach-searchv').val(),
     };
-
-    console.log(updateCoachPayload);
     
     $.ajax({
       type: 'PUT',
@@ -152,7 +151,7 @@ $(document).ready(function(){
       data: JSON.stringify(updateCoachPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -167,15 +166,13 @@ $(document).ready(function(){
       "searchval": $('#delete-player-searchv').val(),
     };
     
-    console.log(deletePlayerPayload);
-
     $.ajax({
       type: 'DELETE',
       url: 'player',
       data: JSON.stringify(deletePlayerPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -196,7 +193,7 @@ $(document).ready(function(){
       data: JSON.stringify(deleteCoachPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;
@@ -216,7 +213,7 @@ $(document).ready(function(){
       data: JSON.stringify(deleteManagerPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        queryResult.text(rowsToTextBox(response));
+        queryResult.html(renderResult(response))
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;

@@ -78,27 +78,27 @@ const updatePlayerAgeQuery = `
 UPDATE player 
 SET age = $[updateval]
 WHERE playerId = $[searchval]
-RETURNING (playerId, age, height, jerseyNumber); 
+RETURNING playerId, age, height, jerseyNumber; 
 `
 
 const updatePlayerHeightQuery = `
 UPDATE player 
 SET height = $[updateval]
 WHERE playerId = $[searchval]
-RETURNING (playerId, age, height, jerseyNumber); 
+RETURNING playerId, age, height, jerseyNumber; 
 `
 
 const updatePlayerJNQuery = `
 UPDATE player 
 SET jerseyNumber = $[updateval]
 WHERE playerId = $[searchval]
-RETURNING (playerId, age, height, jerseyNumber); 
+RETURNING playerId, age, height, jerseyNumber; 
 `
 
 const deletePlayerQuery = `
 DELETE FROM player 
-WHERE $[searchfield] = $[searchval]
-RETURNING (playerId, age, height, jerseyNumber);
+WHERE $[searchfield~] = $[searchval]
+RETURNING playerId, age, height, jerseyNumber;
 `
 
 const getCoachQuery = `
@@ -124,13 +124,13 @@ const updateCoachQuery = `
 UPDATE coach 
 SET age = $[updateval]
 WHERE coachId = $[searchval]
-RETURNING (coachId, age, gender);
+RETURNING coachId, age, gender;
 `
 
 const deleteCoachQuery = `
 DELETE coach 
-WHERE $[searchfield] = $[searchval]
-RETURN (coachId, age, gender);
+WHERE $[searchfield~] = $[searchval]
+RETURNING coachId, age, gender;
 `
 
 const getManagerQuery = `
@@ -153,9 +153,9 @@ RETURNING managerId;
 `
 
 const deleteManagerQuery = `
-DELETE manager 
+DELETE FROM leaguemanager 
 WHERE managerId = $[managerId]
-RETURNING (managerId);
+RETURNING managerId;
 `
 
 const playerController: ((db: pgPromise.IDatabase<{}>) => IPlayerController) = (db) => ({

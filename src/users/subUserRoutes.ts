@@ -208,7 +208,7 @@ const managerRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.delete('manager/', async (req: any, res) => {
+  app.delete('/manager', async (req: any, res) => {
     try {
       if (!req.body || !req.body.managerId) {
         throw new Error('Invalid delete manager request');
