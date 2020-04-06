@@ -49,6 +49,46 @@ const playerRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.json({error: err.message || err});
     }
   });
+
+  app.put('/player', async (req: any, res) => {
+    try {
+      if (!req.body || !req.body.updatefield || !req.body.updateval || !req.body.searchval) {
+        throw new Error('Invalid update player request');
+      }
+
+      if (req.body.updatefield == "age"){ 
+        const response = await controller.updatePlayerAge(req.body.updateval, req.body.searchval); 
+        res.json(response); 
+      } else if (req.body.updatefield == "height"){
+        const response = await controller.updatePlayerHeight(req.body.updateval, req.body.searchval); 
+        res.json(response); 
+      } else {
+        const response  = await controller.updatePlayerJN(req.body.updateval, req.body.searchval);
+        res.json(response); 
+      }
+
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
+      res.json({error: err.message || err});
+    }
+  });
+
+  app.delete('/player', async (req: any, res) => {
+    try {
+      if (!req.body || !req.body.searchfield || !req.body.searchval) {
+        throw new Error('Invalid delete player request'); 
+      }
+      console.log(req.body)
+      const response = await controller.deletePlayer(req.body.searchfield, req.body.searchval); 
+      console.log(response);
+      res.json(response);
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
+      res.json({error: err.message || err});
+    }
+  });
 }
 
 const coachRoutes: RouteRegistrar = (app: express.Application, db) => {
@@ -95,6 +135,37 @@ const coachRoutes: RouteRegistrar = (app: express.Application, db) => {
       res.json({error: err.message || err});
     }
   });
+
+  app.put('/coach', async (req: any, res) => {
+    try {
+      if (!req.body || !req.body.updateval || !req.body.searchval) {
+        throw new Error('Invalid update coach request');
+      }
+      console.log(req.body)
+      const response = await controller.updateCoach(req.body.updateval, req.body.searchval); 
+      console.log(response);
+      res.json(response); 
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
+      res.json({error: err.message || err});
+    }
+  });
+
+  app.delete('/coach', async (req: any, res) => {
+    try {
+      if (!req.body || !req.body.searchfield || !req.body.searchval) {
+        throw new Error('Invalid delete coach request'); 
+      }
+      console.log(req.body)
+      const response = await controller.deleteCoach(req.body.searchfield, req.body.searchval); 
+      res.json(response); 
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
+      res.json({error: err.message || err});
+    }
+  }); 
 }
 
 const managerRoutes: RouteRegistrar = (app: express.Application, db) => {
@@ -122,7 +193,7 @@ const managerRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.post('/manager', async (req: any, res) => {
+  app.put('/manager', async (req: any, res) => {
     try {
       if (!req.body || !req.body.managerId) {
         throw new Error('Invalid add manager request');
@@ -133,6 +204,20 @@ const managerRoutes: RouteRegistrar = (app: express.Application, db) => {
     } catch(err) {
       log.error(err.message || err);
       res.statusCode = 500;
+      res.json({error: err.message || err});
+    }
+  });
+
+  app.delete('manager/', async (req: any, res) => {
+    try {
+      if (!req.body || !req.body.managerId) {
+        throw new Error('Invalid delete manager request');
+      }
+      const response = await controller.deleteManager(req.body.managerId); 
+      res.json(response); 
+    } catch(err) {
+      log.error(err.message || err);
+      res.statusCode = 404;
       res.json({error: err.message || err});
     }
   });
