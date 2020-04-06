@@ -2,6 +2,9 @@
 INSERT INTO teams (teamName, coachId, captainId) VALUES ('Vancouver Whitecaps', 3, 1);
 INSERT INTO teams (teamName, coachId, captainId) VALUES ('FC Barcelona', 4, (SELECT playerId FROM player WHERE playerId=2));
 INSERT INTO teams (teamName, coachId, captainId) VALUES ('Real Madrid', 8, 6);
+INSERT INTO teams (teamName, coachId, captainId) VALUES ('Seattle Sounders', 9, null);
+INSERT INTO teams (teamName, coachId, captainId) VALUES ('Bayern Munich', 10, null);
+INSERT INTO teams (teamName, coachId, captainId) VALUES ('Manchester United', 11, null);
 
 -- Insert team rosters 
 INSERT INTO teamRoster (playerId, teamName, year) VALUES (1, 'Vancouver Whitecaps', 2019); 
