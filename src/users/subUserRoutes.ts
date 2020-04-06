@@ -193,7 +193,7 @@ const managerRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.put('/manager', async (req: any, res) => {
+  app.post('/manager', async (req: any, res) => {
     try {
       if (!req.body || !req.body.managerId) {
         throw new Error('Invalid add manager request');
