@@ -26,20 +26,6 @@ const teamToText = (teams) => {
   },'');
 }
 
-const updateGamesTable = (gameBox) => {
-  $.ajax({
-    type: 'GET',
-    url: 'g',
-    success: (response) => {
-      gameBox.text("Registered Games: \n" + rowsToTextBox(response));
-    },
-    error: (err) => {
-      var errMessage = err.status + ' : ' + err.statusText;
-      alert('Error - ' + errMessage);
-    }
-  });
-}
-
 const updateTeamsTable = (teamBox) => {
   $.ajax({
     type: 'GET',
@@ -57,10 +43,8 @@ const updateTeamsTable = (teamBox) => {
 $(document).ready(function() {
   const queryResult = $('#query-result');
   const teamBox = $('#team-box');
-  const gameBox = $('#game-box');
 
   // query data for team and game on startup
-  updateGamesTable(gameBox);
   updateTeamsTable(teamBox);
 
   // button functions
@@ -94,20 +78,17 @@ $(document).ready(function() {
   });
 
   $('#find-gamesPlayed-btn').click(() => {
-    // var gTime = $('#game-time').val();
-    // var gLoc = $('#game-loc').val();
     var gT1N =  $('#find-team1-name').val();
     var gT2N = $('#find-team2-name').val();
+    var gLoc = $('#find-loc').val();
 
-    // gTime = (gTime == "") ? '%' : gTime;
-    // gLoc = (gLoc == "") ? '%' : gLoc;
-    // gT1N = (gT1N == "") ? '%' : gT1N;
-    gT2N = (gT2N == "") ? '%' : gT2N;
+    gT1N = (gT1N == "") ? '%25' : gT1N;
+    gT2N = (gT2N == "") ? '%25' : gT2N;
+    gLoc = (gLoc == "") ? '%25' : gLoc;
     
     $.ajax({
       type: 'GET',
-      // url: 'gp/' + gTime + '/' + gLoc + '/' + gT1N + '/' + gT2N,
-      url: 'gp/' + gT1N + '/' + gT2N,
+      url: 'gp/' + gT1N + '/' + gT2N + '/' + gLoc,
       success: (response) => {
         queryResult.html(renderResult(response))
       },
@@ -135,7 +116,6 @@ $(document).ready(function() {
       data: JSON.stringify(gamesPlayedRequestPayload),
       contentType: 'application/json; charset=utf-8',
       success: (response) => {
-        updateGamesTable(gameBox);
       },
       error: (err) => {
         var errMessage = err.status + ': ' + err.statusText;

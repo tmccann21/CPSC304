@@ -19,6 +19,10 @@
   <!-- <p class="info-box" id="game-box">
     Registered Games
   </p> -->
+  <div>
+  <button type="button" id="list-gamesPlayed-btn">List All Games Played</button>
+  </div>
+
   <div class="form-group">
 	  <label for="game-time">Time: </label>
 	  <input type="timestamp" class="form-control" id="game-time" placeholder= "Enter a time" min="1990-01-01 00:00:00" max="9999-12-31 11:59:59">
@@ -45,7 +49,6 @@
   </div>
 
   <button type="button" id="add-gamesPlayed-btn">Add Game</button>
-  <button type="button" id="list-gamesPlayed-btn">List All Games Played</button>
 
   <div class="form-group">
   <label for="find-team1-name"> Team 1: </label>
@@ -55,6 +58,12 @@
     <label for="find-team2-name"> Team 2: </label>
     <input type="string" class="form-group" id="find-team2-name" placeholder="Enter a team">
   </div>
+  <div class="form-group">
+    <label for="find-loc"> Location: </label>
+    <input type="string" class="form-group" id="find-loc" placeholder="Enter a location">
+  </div>
+  <label> <i>* any of these fields can be left blank</i></label>
+  <div></div>
   <button type="button" id="find-gamesPlayed-btn">Find Game(s)</button>
 </div>
 </body>
