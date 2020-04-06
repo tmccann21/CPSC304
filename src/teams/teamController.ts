@@ -1,48 +1,38 @@
 import pgPromise from "pg-promise";
 
-export interface IUserInfo {
-  name: string;
-  email: string;
-  phone: string;
+export interface ITeamController {
+  getTeams: () => Promise<any>;
+  getTeamSeasons: (teamName: string) => Promise<any>;
+  getAllSeasons: () => Promise<any>;
 }
 
-export interface IUserResponse extends IUserInfo {
-  userId: number;
-}
-
-export interface IUserController {
-  getUser: (userId: string) => Promise<IUserResponse>;
-  createUser: (info: IUserInfo, password: string) => Promise<IUserResponse>;
-  getUsers: () => Promise<IUserResponse[]>;
-}
-
-const createUserQuery = `
-INSERT INTO users (name, email, phone, password)
-VALUES ($[name], $[email], $[phone], $[password])
-RETURNING userId, name, email, phone;
+const getTeamsQuery = `
+SELECT *
+FROM teams;
 `
 
-const getUserQuery = `
-SELECT userId, name, email, phone
-FROM users
-WHERE userId = $[userId];
+const getTeamSeasonsQuery = `
+SELECT t.teamName, s.seasonYear, s.leagueName
+FROM teams t, seasonParticipation sp, seasons s
+WHERE t.teamName = $[teamName] AND t.teamName = sp.teamName AND sp.seasonYear = s.seasonYear AND sp.leagueName = s.leagueName
+
 `
 
-const getUsersQuery = `
-SELECT userId, name, email, phone
-FROM users;
+const getSeasonsQuery = `
+SELECT *
+FROM seasons;
 `
 
-const userController: ((db: pgPromise.IDatabase<{}>) => IUserController) = (db) => ({
-  getUser: async (userId: string) => {
-    return db.one(getUserQuery, { userId });
+const teamController: ((db: pgPromise.IDatabase<{}>) => ITeamController) = (db) => ({
+  getTeams: async () => {
+    return db.manyOrNone(getTeamsQuery);
   },
-  getUsers: async () => {
-    return db.manyOrNone(getUsersQuery);
+  getTeamSeasons: async (teamName: string) => {
+    return db.manyOrNone(getTeamSeasonsQuery, { teamName });
   },
-  createUser: async (info: IUserInfo, password: string) => {
-    return db.one(createUserQuery, { ...info, password });
+  getAllSeasons: async () => {
+    return db.manyOrNone(getSeasonsQuery);
   },
 })
 
-export default userController;
+export default teamController;

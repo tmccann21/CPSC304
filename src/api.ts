@@ -4,6 +4,7 @@ import log from './util/log';
 import express from 'express';
 
 import userRoutes from './users/userRoutes';
+import teamRoutes from './teams/teamRoutes';
 import playerRoutes from './users/subUserRoutes'; 
 import {coachRoutes} from './users/subUserRoutes';
 import {managerRoutes} from './users/subUserRoutes'; 
@@ -54,6 +55,10 @@ const api = (app: express.Application) => {
     res.render('playerStats.ejs');
   })
 
+  app.get('/team', function(req, res){
+    res.render('teams.ejs');
+  })
+
   userRoutes(app, db);
   playerRoutes(app, db);
   coachRoutes(app, db); 
@@ -62,8 +67,8 @@ const api = (app: express.Application) => {
   positionRoutes(app, db); 
   pStatRoutes(app, db); 
   statsRoutes(app, db); 
+  teamRoutes(app, db);
 
-  
   app.use(function (req, res, next) {
     log.info(`${req.method} ${req.path} [${res.statusCode}]`);
     res.end();

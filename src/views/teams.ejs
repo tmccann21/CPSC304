@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="./teams.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="container-fluid bg-3 text-center">    
+  <h3>Cool Sports Database</h3>
+  <div id='table-container'>
+    <p> Query Result Table </p>
+    <table id="query-result"></table>
+  </div>
+  <button type="button" id="list-teams-btn">List Teams</button>
+  <br>
+  <div class ="form-group">
+    <p> list all seasons for a team </p>
+    <label for="team-name-field">Team Name: </label>
+    <input type="email" class="form-control" id="team-name-field" placeholder="team name">
+  </div>
+  <button type="button" id="list-team-seasons-btn">Run Query</button>
+  <br>
+  <button type="button" id="list-seasons-btn">List All Seasons</button>
+</body>
+</html>

@@ -1,14 +1,14 @@
 import { RouteRegistrar } from "../api";
-import userController from './teamController';
+import teamController from './teamController';
 import express, { response } from 'express';
 import log from '../util/log';
 
-const userRoutes: RouteRegistrar = (app: express.Application, db) => {
-  const controller = userController(db);
+const teamRoutes: RouteRegistrar = (app: express.Application, db) => {
+  const controller = teamController(db);
   
-  app.get('/user/:id', async (req: any, res) => {
+  app.get('/teams', async (req: any, res) => {
     try {
-      const response = await controller.getUser(req.params.id);
+      const response = await controller.getTeams();
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
@@ -17,9 +17,13 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.get('/user', async (req: any, res) => {
+  app.post('/teamseason', async (req: any, res) => {
     try {
-      const response = await controller.getUsers();
+      if (!req.body || !req.body.teamName) {
+        throw new Error('Invalid get team szn request');
+      }
+
+      const response = await controller.getTeamSeasons(req.body.teamName);
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
@@ -28,19 +32,9 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
     }
   });
 
-  app.post('/user', async (req: any, res) => {
+  app.get('/seasons', async (req: any, res) => {
     try {
-      if (!req.body || !req.body.name || ! req.body.email || !req.body.phone || !req.body.password) {
-        throw new Error('Invalid create user request');
-      }
-
-      const user = {
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-      }
-
-      const response = await controller.createUser(user, req.body.password);
+      const response = await controller.getAllSeasons();
       res.json(response);
     } catch(err) {
       log.error(err.message || err);
@@ -50,4 +44,4 @@ const userRoutes: RouteRegistrar = (app: express.Application, db) => {
   })
 }
 
-export default userRoutes;
+export default teamRoutes;
