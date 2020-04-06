@@ -98,6 +98,10 @@ SELECT M.managerId, U.name
 FROM leaguemanager M, users U
 WHERE M.managerId = U.userId;
 
+SELECT t.teamName, s.seasonYear, s.leagueName
+FROM teams t, seasonParticipation sp, seasons s
+WHERE t.teamName = $[teamName] AND t.teamName = sp.teamName AND sp.seasonYear = s.seasonYear AND sp.leagueName = s.leagueName
+
 -- aggregation query
 
 SELECT count(*)
@@ -188,3 +192,9 @@ WHERE userId = $[userId];
 
 SELECT userId, name, email, phone
 FROM users;
+
+SELECT *
+FROM teams;
+
+SELECT *
+FROM seasons;
