@@ -6,7 +6,9 @@ INSERT INTO users (name, email, phone, password) VALUES ('Tim', 'timbo@hotmail.c
 INSERT INTO users (name, email, phone, password) VALUES ('Jerry', 'jerry@gmail.com', '+111 111 11 11', 'longpassword');
 INSERT INTO users (name, email, phone, password) VALUES ('Tom', 'tomandjerry@hotmail.com', '+1 234 456 7890', '192naksdasdlsadjadwoijlfa1323');
 INSERT INTO users (name, email, phone, password) VALUES ('Bill B', 'thegoat@mail.com', '+9 604 790 1234', 'a230928103213asldkajs122319820391830');
-
+INSERT INTO users (name, email, phone, password) VALUES ('Mickey', 'mickjagger@gmail.com', '+9 102 122 0972', 'nvn0w9n8vs4ul38nvnuvo48sunovs');
+INSERT INTO users (name, email, phone, password) VALUES ('Goofy', 'gwagon@gmail.com', '+2 839 918 9388', 'goof');
+INSERT INTO users (name, email, phone, password) VALUES ('Donald', 'realDonaldDuck@whitehouse.gov', '+9 481 992 973', 'quack');
 
 -- Inserts players
 
@@ -24,7 +26,9 @@ INSERT INTO player (playerId, age, height, jerseyNumber) VALUES (7, 19, 190, 1);
 INSERT INTO coach (coachId, age, gender) VALUES ( (SELECT userId FROM users WHERE userId=3), 45, 'female');
 INSERT INTO coach (coachId, age, gender) VALUES ( (SELECT userId FROM users WHERE userId=4), 51, 'male');
 INSERT INTO coach (coachId, age, gender) VALUES (8, 54, 'male');
-
+INSERT INTO coach (coachId, age, gender) VALUES (9, 50, 'female');
+INSERT INTO coach (coachId, age, gender) VALUES (10, 12, 'male');
+INSERT INTO coach (coachId, age, gender) VALUES (11, 64, 'male');
 
 -- Inserts league managers
 
