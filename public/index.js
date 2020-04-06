@@ -96,4 +96,15 @@ $(document).ready(function(){
       },
     });
   });
+
+  $('#run-division-btn').click(() => {
+    $.ajax({
+      type: 'POST',
+      url: 'stats/division',
+      contentType: 'application/json; charset=utf-8',
+      success: (response) => {
+        queryResult.html(renderResult(response));
+      },
+    });
+  });
 });
