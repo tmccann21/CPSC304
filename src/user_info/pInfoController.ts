@@ -21,6 +21,8 @@ export interface IPositionInfo {
 export interface IPStatController {
     getPlayerStats: (playerId: string) => Promise<IPStatResponse[]>;
     getStats: () => Promise<IPStatResponse[]>;
+    getAvgStats: () => Promise<IPStatInfo[]>; 
+    getTotalStats: () => Promise<IPStatInfo[]>; 
     getPlayerAvgStats: (playerId: string) => Promise<IPStatInfo[]>; 
     getPlayerTotalStats: (playerId: string) => Promise<IPStatInfo[]>; 
     getTopGoals: (count: string) => Promise<IPStatResponse[]>;
@@ -73,15 +75,27 @@ SELECT playerId, year, goals, assists, saves, plusminus
 FROM playerStats;
 `
 
+const getAvgStatsQuery = `
+SELECT (playerId, ROUND(AVG(goals)::numeric,3), ROUND(AVG(assists)::numeric,3), ROUND(AVG(saves)::numeric,3), ROUND(AVG(plusminus)::numeric,3))
+FROM playerStats 
+GROUP BY playerId;
+`
+
+const getTotalStatsQuery = `
+SELECT (playerId, SUM(goals), SUM(assists), SUM (saves), SUM(plusminus))
+FROM playerStats
+GROUP BY playerId;
+`
+
 const getPlayerAvgStatsQuery = `
-SELECT playerId, ROUND(AVG(goals)::numeric,3), ROUND(AVG(assists)::numeric,3), ROUND(AVG(saves)::numeric,3), ROUND(AVG(plusminus)::numeric,3)
+SELECT (playerId, ROUND(AVG(goals)::numeric,3), ROUND(AVG(assists)::numeric,3), ROUND(AVG(saves)::numeric,3), ROUND(AVG(plusminus)::numeric,3))
 FROM playerStats 
 WHERE playerId = $[playerId]
 GROUP BY playerId;
 `
 
 const getPlayerTotalStatsQuery = `
-SELECT playerId, SUM(goals), SUM(assists), SUM (saves), SUM(plusminus)
+SELECT (playerId, SUM(goals), SUM(assists), SUM (saves), SUM(plusminus)) 
 FROM playerStats
 WHERE playerId = $[playerId]
 GROUP BY playerId;
@@ -142,6 +156,12 @@ const pStatController: ((db: pgPromise.IDatabase<{}>) => IPStatController) = (db
   },
   getStats: async () => {
     return db.manyOrNone(getStatsQuery);
+  },
+  getAvgStats: async () => {
+    return db.manyOrNone(getAvgStatsQuery);
+  },
+  getTotalStats: async () => {
+    return db.manyOrNone(getTotalStatsQuery);
   },
   getPlayerAvgStats: async (playerId: string) => {
     return db.one(getPlayerAvgStatsQuery, { playerId });

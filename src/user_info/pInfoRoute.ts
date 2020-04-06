@@ -74,7 +74,7 @@ const pStatRoutes: RouteRegistrar = (app: express.Application, db) => {
       }
     });
 
-    app.get('/stats/player/', async (req: any, res) => {
+    app.get('/stats/player', async (req: any, res) => {
         try {
           const response = await controller.getStats(); 
           res.json(response);
@@ -84,6 +84,29 @@ const pStatRoutes: RouteRegistrar = (app: express.Application, db) => {
           res.json({error: err.message || err});
         }
       });
+
+    app.get('/stats/avg', async (req: any, res) => {
+        try {
+          const response = await controller.getAvgStats(); 
+          res.json(response);
+        } catch(err) {
+          log.error(err.message || err);
+          res.statusCode = 404;
+          res.json({error: err.message || err});
+        }
+      });
+
+    app.get('/stats/total', async (req: any, res) => {
+        try {
+          const response = await controller.getTotalStats(); 
+          res.json(response);
+        } catch(err) {
+          log.error(err.message || err);
+          res.statusCode = 404;
+          res.json({error: err.message || err});
+        }
+      });
+
 
     app.get('/stats/player/:id/avg', async (req: any, res) => {
       try {
